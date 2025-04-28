@@ -1,4 +1,4 @@
-// Existing interfaces would be here...
+// src/interfaces.ts
 
 /**
  * Interface representing the raw SharePoint list API response
@@ -15,6 +15,7 @@ export interface ISharePointListResponse {
   RootFolder: {
     ServerRelativeUrl: string;
   };
+  [key: string]: any; // For any other fields that might be present
 }
 
 /**
@@ -29,6 +30,9 @@ export interface IList {
   BaseTemplateID: number;
 }
 
+/**
+ * Interface representing a SharePoint list item
+ */
 export interface ISharePointListItem {
   ID: number;
   Title?: string;
@@ -40,6 +44,164 @@ export interface ISharePointListItem {
   [key: string]: any; // Allow for dynamic custom fields
 }
 
+/**
+ * Interface representing a formatted list item for return
+ */
 export interface IFormattedListItem {
   [key: string]: any; // Dynamic fields based on the list schema
+}
+
+/**
+ * Interface for the response from the SharePoint web API
+ */
+export interface ISharePointWebResponse {
+  d: {
+    Title: string;
+    [key: string]: any;
+  };
+}
+
+/**
+ * Interface for the response from creating a list item
+ */
+export interface ISharePointCreateItemResponse {
+  d: ISharePointListItem;
+}
+
+/**
+ * Interface for SharePoint field definition
+ */
+export interface ISharePointField {
+  InternalName: string;
+  Title: string;
+  TypeAsString: string;
+  TypeDisplayName?: string;
+  ReadOnlyField: boolean;
+  Hidden: boolean;
+  LookupList?: string;
+  LookupField?: string;
+  Choices?: {
+    results: string[];
+  };
+  [key: string]: any;
+}
+
+/**
+ * Interface for lookup field data
+ */
+export interface ILookupFieldValue {
+  ID: number;
+  Value: string;
+}
+
+/**
+ * Interface for SharePoint lookup data collection
+ */
+export interface ILookupData {
+  [fieldName: string]: ILookupFieldValue[];
+}
+
+/**
+ * Interface for mock data generation result
+ */
+export interface IMockDataResult {
+  listTitle: string;
+  writeableFields: {
+    name: string;
+    title: string;
+    type: string;
+  }[];
+  lookupFields: {
+    name: string;
+    valuesFound: number;
+  }[];
+  requested: number;
+  successful: number;
+  failed: number;
+  successfulItems: number[];
+  failedItems: { index: number, error: string }[];
+}
+
+/**
+ * Interface for tool function result content item (text)
+ */
+export interface IToolResultTextContent {
+  type: "text";
+  text: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Interface for tool function result content item (image)
+ */
+export interface IToolResultImageContent {
+  type: "image";
+  data: string;
+  mimeType: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Interface for tool function result content item (audio)
+ */
+export interface IToolResultAudioContent {
+  type: "audio";
+  data: string;
+  mimeType: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Interface for tool function result content item (resource with text)
+ */
+export interface IToolResultResourceTextContent {
+  type: "resource";
+  resource: {
+    uri: string;
+    text: string;
+    mimeType?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
+/**
+ * Interface for tool function result content item (resource with blob)
+ */
+export interface IToolResultResourceBlobContent {
+  type: "resource";
+  resource: {
+    uri: string;
+    blob: string;
+    mimeType?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
+/**
+ * Union type for all possible content item types
+ */
+export type ToolResultContentItem = 
+  | IToolResultTextContent 
+  | IToolResultImageContent 
+  | IToolResultAudioContent 
+  | IToolResultResourceTextContent 
+  | IToolResultResourceBlobContent;
+
+/**
+ * Interface for tool function result
+ */
+export interface IToolResult {
+  content: ToolResultContentItem[];
+  isError?: boolean;
+  meta?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+/**
+ * Interface for functions that implement tool functionality
+ */
+export interface IToolFunction<T> {
+  (params: T): Promise<IToolResult>;
 }

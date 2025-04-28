@@ -118,3 +118,16 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 - Open Claude Desktop and ask a question like `Get me the list of lists from https://<your-tenant>.sharepoint.com/sites/Dashboard-Communication. Present the results in a table form. don't use code`.
 
 ![Sample result](IMG/image-6.png)
+
+## For contributors
+
+- Build a new npm package
+
+```bash
+npm run build
+npm publish
+```
+
+## Run MCP Inspector  locally
+
+npx @modelcontextprotocol/inspector node build/index.js

@@ -1,16 +1,13 @@
-// tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "./build",
-    "rootDir": "./",
-    "strict": true,
     "esModuleInterop": true,
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "debug.ts"],
+  "include": ["debug.ts", "src/**/*"],
   "exclude": ["node_modules"]
 }
