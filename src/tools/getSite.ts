@@ -1,25 +1,25 @@
-// src/tools/getTitle.ts
+// src/tools/getSite.ts
 import request from 'request-promise';
 import { ISharePointWebResponse, IToolResult } from '../interfaces';
 import { getSharePointHeaders } from '../auth';
 import { SharePointConfig } from '../config';
 
-export interface GetTitleParams {
+export interface GetSiteParams {
     url: string;
 }
 
 /**
- * Get the title of a SharePoint website
+ * Get the details of a SharePoint website
  * @param params Parameters including the SharePoint site URL
  * @param config SharePoint configuration
- * @returns Tool result with site title
+ * @returns Tool result with site details
  */
-export async function getTitle(
-    params: GetTitleParams, 
+export async function getSite(
+    params: GetSiteParams, 
     config: SharePointConfig
 ): Promise<IToolResult> {
     const { url } = params;
-    console.error("getTitle tool called with URL:", url);
+    console.error("getSite tool called with URL:", url);
 
     try {
         // Authenticate with SharePoint
@@ -37,12 +37,12 @@ export async function getTitle(
         }) as ISharePointWebResponse;
 
         console.error("SharePoint API response received");
-        console.error("SharePoint site title:", response.d.Title);
+        console.error("SharePoint site:", response.d);
 
         return {
             content: [{
                 type: "text",
-                text: `SharePoint site title: ${response.d.Title}`
+                text: `SharePoint site: ${response.d}`
             }]
         } as IToolResult;
     } catch (error: unknown) {
@@ -57,16 +57,16 @@ export async function getTitle(
             errorMessage = "Unknown error occurred";
         }
 
-        console.error("Error in getTitle tool:", errorMessage);
+        console.error("Error in getSite tool:", errorMessage);
 
         return {
             content: [{
                 type: "text",
-                text: `Error fetching title: ${errorMessage}`
+                text: `Error fetching site: ${errorMessage}`
             }],
             isError: true
         } as IToolResult;
     }
 }
 
-export default getTitle;
+export default getSite;

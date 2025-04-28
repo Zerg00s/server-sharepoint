@@ -11,7 +11,7 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Read User           | ❌        |
 |                    | Find User           | ❌        |
 | Sites              |                     | ❌        |
-|                    | Get Site Title      | ✅        |
+|                    | Get Site            | ✅        |
 |                    | List Sites          | ❌        |
 |                    | Get Site Details    | ❌        |
 |                    | Create Subsite      | ❌        |
@@ -95,7 +95,7 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
       "command": "npx",
       "args": [
         "-y",
-        "server-sharepoint"
+        "server-sharepoint@latest"
       ],
       "env": {
         "SHAREPOINT_CLIENT_ID": "<your-client-id>",

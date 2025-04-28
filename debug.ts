@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 // Sample debug script for testing SharePoint tools
-// npx ts-node debug.ts getTitle "https://gocleverpointcom.sharepoint.com/sites/Dashboard-Communication"
+// npx ts-node debug.ts getSite "https://gocleverpointcom.sharepoint.com/sites/Dashboard-Communication"
 // npx ts-node debug.ts getLists "https://gocleverpointcom.sharepoint.com/sites/Dashboard-Communication"
 // npx ts-node debug.ts getListItems "https://gocleverpointcom.sharepoint.com/sites/Dashboard-Communication" "Sites Report"
 
 
 import * as dotenv from 'dotenv';
 import getSharePointConfig from './src/config';
-import { getTitle, getLists, getListItems, addMockData } from './src/tools';
+import { getSite, getLists, getListItems, addMockData } from './src/tools';
 
 // Load environment variables
 dotenv.config();
@@ -23,7 +23,7 @@ async function main() {
   const args = process.argv.slice(2);
   console.log("Command line arguments:", args);
   
-  const command = args[0] || 'getTitle'; // Default to getTitle if no command provided
+  const command = args[0] || 'getSite'; // Default to getSite if no command provided
   console.log(`Command to execute: ${command}`);
   
   // Get the site URL from command line or environment
@@ -31,7 +31,7 @@ async function main() {
   if (!siteUrl) {
     console.error('ERROR: No SharePoint site URL provided.');
     console.error('Usage: node debug.js [command] [siteUrl] [options]');
-    console.error('Commands: getTitle, getLists, getListItems, addMockData');
+    console.error('Commands: getSite, getLists, getListItems, addMockData');
     process.exit(1);
   }
   console.log(`Using site URL: ${siteUrl}`);
@@ -51,9 +51,9 @@ async function main() {
     let result;
     
     switch (command) {
-      case 'getTitle':
-        console.log("Calling getTitle tool function...");
-        result = await getTitle({ url: siteUrl }, config);
+      case 'getSite':
+        console.log("Calling getSite tool function...");
+        result = await getSite({ url: siteUrl }, config);
         break;
         
       case 'getLists':
@@ -82,7 +82,7 @@ async function main() {
         
       default:
         console.error(`Unknown command: ${command}`);
-        console.error('Valid commands: getTitle, getLists, getListItems, addMockData');
+        console.error('Valid commands: getSite, getLists, getListItems, addMockData');
         process.exit(1);
     }
     

@@ -6,11 +6,11 @@ import { z } from "zod";
 // Import from config without .js extension
 import getSharePointConfig, { validateConfig } from './config';
 import { 
-    getTitle, 
+    getSite, 
     getLists, 
     getListItems, 
     addMockData,
-    GetTitleParams,
+    GetSiteParams,
     GetListsParams,
     GetListItemsParams,
     AddMockDataParams
@@ -33,15 +33,15 @@ const server = new McpServer({
 if (validateConfig(config)) {
     console.error("✅ SharePoint credentials are valid. Registering tools...");
 
-    // Add getTitle tool
+    // Add getSite tool
     server.tool(
-        "getTitle",
+        "getSite",
         "Get the title of a SharePoint website",
         {
             url: z.string().url().describe("URL of the SharePoint website")
         },
-        async (params: GetTitleParams) => {
-            return await getTitle(params, config);
+        async (params: GetSiteParams) => {
+            return await getSite(params, config);
         }
     );
 

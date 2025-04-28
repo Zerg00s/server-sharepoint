@@ -1,3 +1,0 @@
-"use strict";
-// Existing interfaces would be here...
-Object.defineProperty(exports, "__esModule", { value: true });
