@@ -8,8 +8,7 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 | Component          | Operation           | Available |
 |--------------------|---------------------|-----------|
 | Users              |                     | ❌        |
-|                    | Read User           | ❌        |
-|                    | Find User           | ❌        |
+|                    | Get User            | ❌        |
 | Sites              |                     | ❌        |
 |                    | List Sites          | ❌        |
 |                    | Get Site Details    | ✅        |
@@ -24,12 +23,10 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Delete List         | ❌        |
 | List Items         |                     | ❌        |
 |                    | Get All List Items  | ✅        |
-|                    | Create Mock Items   | ✅        |
-|                    | Create List Item    | ❌        |
-|                    | Read List           | ❌        |
-|                    | Add to List         | ❌        |
-|                    | Update List         | ❌        |
-|                    | Delete List         | ❌        |
+|                    | Add Mock Items      | ✅        |
+|                    | Add List Item       | ❌        |
+|                    | Update List Item    | ❌        |
+|                    | Delete List Item    | ❌        |
 
 ## Configuration steps
 
