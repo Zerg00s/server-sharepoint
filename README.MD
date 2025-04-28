@@ -83,7 +83,7 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 - Download [Claude Desktop](https://claude.ai/download) and install it.
 - In Claude Desktop, go to `File` > `Settings` > `Developer`.
 ![File > Settings](IMG/image.png)
-- Click Config
+- Click Edit Config
 ![Config](IMG/image-1.png)
 - Open the claude_desktop_config.json config file in the editor.
 - Paste the following to the config and update the `mcpServers` section with your own values:
