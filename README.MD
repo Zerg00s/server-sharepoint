@@ -11,9 +11,8 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Read User           | ❌        |
 |                    | Find User           | ❌        |
 | Sites              |                     | ❌        |
-|                    | Get Site            | ✅        |
 |                    | List Sites          | ❌        |
-|                    | Get Site Details    | ❌        |
+|                    | Get Site Details    | ✅        |
 |                    | Create Subsite      | ❌        |
 |                    | Delete Site         | ❌        |
 | Lists              |                     | ❌        |
