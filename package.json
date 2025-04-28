@@ -1,0 +1,28 @@
+{
+  "name": "server-sharepoint",
+  "version": "1.0.1",
+  "main": "build/index.js",
+  "bin": {
+    "server-sharepoint": "build/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.1",
+    "node-sp-auth": "^3.0.9",
+    "dotenv": "^16.5.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "@types/request-promise": "^4.1.51",   
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
