@@ -42,7 +42,7 @@ export async function getSite(
         return {
             content: [{
                 type: "text",
-                text: `SharePoint site: ${response.d}`
+                text: JSON.stringify(response.d, null, 2)
             }]
         } as IToolResult;
     } catch (error: unknown) {

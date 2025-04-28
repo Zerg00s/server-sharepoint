@@ -1,9 +1,9 @@
 {
   "name": "server-sharepoint",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "main": "build/index.js",
   "bin": {
-    "server-sharepoint": "build/index.js"
+    "server-sharepoint": "build/src/index.js"
   },
   "scripts": {
     "build": "tsc",

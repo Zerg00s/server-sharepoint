@@ -95,7 +95,7 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
       "command": "npx",
       "args": [
         "-y",
-        "server-sharepoint@latest"
+        "server-sharepoint"
       ],
       "env": {
         "SHAREPOINT_CLIENT_ID": "<your-client-id>",
@@ -126,6 +126,8 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 ```bash
 npm run build
 npm publish
+npx clear-npx-cache
+npm cache clean --force
 ```
 
 ## Run MCP Inspector  locally
