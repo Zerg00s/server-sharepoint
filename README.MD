@@ -22,6 +22,7 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Update Navigation Link     | ✅        |
 |                    | Delete Navigation Link     | ✅        |
 |                    | Get Subsites               | ✅        |
+|                    | Create Subsite             | ❌        |
 |                    | Delete Subsite             | ✅        |
 | Lists              |                            | ✅        |
 |                    | Get All Lists              | ✅        |
@@ -48,6 +49,17 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Create List Item           | ✅        |
 |                    | Update List Item           | ✅        |
 |                    | Delete List Item           | ✅        |
+| Pages              |                            | ❌        |
+|                    | Create Modern Page         | ❌        |
+| Documents          |                            | ❌        |
+|                    | Create Document            | ❌        |
+|                    | Upload Document            | ❌        |
+|                    | Copy Document              | ❌        |
+| Taxonomy           |                            | ❌        |
+|                    | Get Taxonomy Group         | ❌        |
+|                    | Create Taxonomy Label      | ❌        |
+|                    | Update Taxonomy Label      | ❌        |
+|                    | Delete Taxonomy Label      | ❌        |
 
 ## Configuration steps
 
