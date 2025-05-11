@@ -2,5 +2,6 @@
 .env.example
 .env.local
 .env.staging
+.env.test
 build
 node_modules

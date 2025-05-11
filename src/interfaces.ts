@@ -205,3 +205,97 @@ export interface IToolResult {
 export interface IToolFunction<T> {
   (params: T): Promise<IToolResult>;
 }
+
+/**
+ * Interface for SharePoint list fields response
+ */
+export interface ISharePointListFieldsResponse {
+  d: {
+    results: ISharePointField[];
+  };
+}
+
+/**
+ * Interface for list field update parameters
+ */
+export interface IFieldUpdateData {
+  Title?: string;
+  Description?: string;
+  Required?: boolean;
+  EnforceUniqueValues?: boolean;
+  Choices?: string[];
+  DefaultValue?: string;
+  [key: string]: any;
+}
+
+/**
+ * Interface for list creation parameters
+ */
+export interface IListCreationData {
+  Title: string;
+  Description?: string;
+  TemplateType?: number; // e.g., 100 for generic list, 101 for document library
+  Url?: string; // Relative URL for the list (used in browser URLs)
+  ContentTypesEnabled?: boolean;
+  AllowContentTypes?: boolean;
+  EnableVersioning?: boolean;
+  EnableMinorVersions?: boolean;
+  EnableModeration?: boolean;
+  [key: string]: any;
+}
+
+/**
+ * Interface for list view parameters
+ */
+export interface IListViewData {
+  Title?: string;
+  ViewQuery?: string;
+  RowLimit?: number;
+  ViewFields?: string[];
+  PersonalView?: boolean;
+  SetAsDefaultView?: boolean;
+  [key: string]: any;
+}
+
+/**
+ * Interface for create list view parameters (Title is required)
+ */
+export interface ICreateListViewData extends Omit<IListViewData, 'Title'> {
+  Title: string;
+}
+
+/**
+ * Interface for SharePoint user
+ */
+export interface ISharePointUser {
+  Id: number;
+  Title: string;
+  Email: string;
+  LoginName: string;
+  IsSiteAdmin?: boolean;
+  [key: string]: any;
+}
+
+/**
+ * Interface for SharePoint group
+ */
+export interface ISharePointGroup {
+  Id: number;
+  Title: string;
+  Description?: string;
+  OwnerTitle?: string;
+  AllowMembersEditMembership?: boolean;
+  OnlyAllowMembersViewMembership?: boolean;
+  [key: string]: any;
+}
+
+/**
+ * Interface for SharePoint group member
+ */
+export interface ISharePointGroupMember {
+  Id: number;
+  Title: string;
+  Email?: string;
+  LoginName: string;
+  [key: string]: any;
+}
