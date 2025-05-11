@@ -25,7 +25,7 @@ function loadConfig() {
     var config = {
         clientId: args.clientId || process.env.SHAREPOINT_CLIENT_ID || '',
         clientSecret: args.clientSecret || process.env.SHAREPOINT_CLIENT_SECRET || '',
-        tenantId: args.tenantId || process.env.SHAREPOINT_TENANT_ID || '',
+        tenantId: args.tenantId || process.env.M365_TENANT_ID || '',
         siteUrl: args.siteUrl || process.env.SHAREPOINT_SITE_URL || ''
     };
     return config;

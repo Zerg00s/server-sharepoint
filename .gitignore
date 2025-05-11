@@ -6,5 +6,8 @@
 SharePointApp-Config.txt
 SharePointApp-Config.xml
 get-site-title.ts
+sample.env.cert
+sample.env.secret
+claude_desktop_config.json
 build
 node_modules

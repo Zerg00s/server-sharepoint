@@ -1,7 +1,7 @@
 // src/tools/getSiteGroups.ts
 import request from 'request-promise';
 import { IToolResult, ISharePointGroup } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetSiteGroupsParams {
@@ -125,3 +125,4 @@ export async function getSiteGroups(
 }
 
 export default getSiteGroups;
+

@@ -1,7 +1,7 @@
 // src/tools/getQuickNavigationLinks.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetQuickNavigationLinksParams {
@@ -25,8 +25,8 @@ export async function getQuickNavigationLinks(
         // Log configuration credentials (masked for security)
         console.error("SharePoint Configuration Check:");
         console.error(`Client ID: ${config.clientId ? '✓ Present' : '✗ Missing'}`);
-        console.error(`Client Secret: ${config.clientSecret ? '✓ Present' : '✗ Missing'}`);
         console.error(`Tenant ID: ${config.tenantId ? '✓ Present' : '✗ Missing'}`);
+        console.error(`Auth Type: ${config.authType}`);
 
         // Authenticate with SharePoint
         console.error("Attempting to authenticate with SharePoint...");

@@ -1,7 +1,7 @@
 // src/tools/deleteListField.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface DeleteListFieldParams {
@@ -116,3 +116,4 @@ export async function deleteListField(
 }
 
 export default deleteListField;
+

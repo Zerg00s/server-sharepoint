@@ -1,7 +1,7 @@
 // src/tools/getListViews.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetListViewsParams {
@@ -141,3 +141,4 @@ export async function getListViews(
 }
 
 export default getListViews;
+

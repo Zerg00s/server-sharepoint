@@ -1,7 +1,7 @@
 // src/tools/removeGroupMember.ts
 import request from 'request-promise';
 import { IToolResult, ISharePointGroupMember } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface RemoveGroupMemberParams {
@@ -121,3 +121,4 @@ export async function removeGroupMember(
 }
 
 export default removeGroupMember;
+

@@ -1,7 +1,7 @@
 // src/tools/getGlobalNavigationLinks.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetGlobalNavigationLinksParams {
@@ -162,3 +162,4 @@ export async function getGlobalNavigationLinks(
 }
 
 export default getGlobalNavigationLinks;
+

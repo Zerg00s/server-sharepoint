@@ -6,7 +6,7 @@ import {
     IMockDataResult, 
     IToolResult 
 } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 import { generateMockValueForField } from '../utils/mockDataGenerator';
 

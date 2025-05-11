@@ -1,7 +1,7 @@
 // src/tools/getLists.ts
 import request from 'request-promise';
 import { ISharePointListResponse, IList, IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetListsParams {

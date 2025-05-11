@@ -1,7 +1,7 @@
 // src/tools/getSiteUsers.ts
 import request from 'request-promise';
 import { IToolResult, ISharePointUser } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetSiteUsersParams {
@@ -201,3 +201,4 @@ export async function getSiteUsers(
 }
 
 export default getSiteUsers;
+

@@ -15,52 +15,99 @@ export function parseCliArgs(): Record<string, string> {
     }, {});
 }
 
-// Configuration interface
-export interface SharePointConfig {
+// Configuration interface for client secret auth
+export interface SharePointSecretConfig {
     clientId: string;
     clientSecret: string;
     tenantId: string;
     siteUrl?: string;
+    authType: 'secret';
 }
 
-// Load and validate configuration
+// Configuration interface for certificate auth
+export interface SharePointCertConfig {
+    clientId: string;
+    certificateThumbprint: string;
+    certificatePassword: string;
+    tenantId: string;
+    siteUrl?: string;
+    authType: 'certificate';
+}
+
+// Union type for both authentication methods
+export type SharePointConfig = SharePointSecretConfig | SharePointCertConfig;
+
+// Load configuration
 export function loadConfig(): SharePointConfig {
     const args = parseCliArgs();
 
-    // Priority: CLI args → fallback: ENV
-    const config = {
-        // Use with auth.ts
-        clientId: args.clientId || process.env.SHAREPOINT_CLIENT_ID || '',
-        clientSecret: args.clientSecret || process.env.SHAREPOINT_CLIENT_SECRET || '',
-        AzureAppId: args.clientId || process.env.AZURE_APPLICATION_ID || '',
-        
-        //TODO: Use with azure_cert_auth.ts (azure_cert_auth.ts needs to be implemented based on the sample from get-site-title.ts)
-        // TODO: azure_cert_auth.ts should similar to how auth.ts is implemented, in terms so that the MCP tools functions can be used with both
-        // auth.ts and azure_cert_auth.ts, depending on the authentication method used
-        // if clientId is set - it's auuth.ts
-        // if AzureAppId is set - it's azure_cert_auth.ts
-        AzureAppCertificateThumbprint: args.clientSecret || process.env.AZURE_APPLICATION_CERTIFICATE_THUMBPRINT || '',
-        AzureAppCertificatePassword: args.clientSecret || process.env.AZURE_APPLICATION_CERTIFICATE_PASSWORD || '',
-        
-        tenantId: args.tenantId || process.env.SHAREPOINT_TENANT_ID || '',
-        siteUrl: args.siteUrl || process.env.SHAREPOINT_SITE_URL || ''
-    };
-
-    return config;
+    // Check if Azure certificate auth variables are present
+    const azureAppId = args.azureAppId || process.env.AZURE_APPLICATION_ID || '';
+    const azureCertThumbprint = args.azureCertThumbprint || process.env.AZURE_APPLICATION_CERTIFICATE_THUMBPRINT || '';
+    const azureCertPassword = args.azureCertPassword || process.env.AZURE_APPLICATION_CERTIFICATE_PASSWORD || '';
+    
+    // Check if SharePoint client secret auth variables are present
+    const spClientId = args.clientId || process.env.SHAREPOINT_CLIENT_ID || '';
+    const spClientSecret = args.clientSecret || process.env.SHAREPOINT_CLIENT_SECRET || '';
+    
+    // Common settings
+    const tenantId = args.tenantId || process.env.M365_TENANT_ID || '';
+    const siteUrl = args.siteUrl || process.env.SHAREPOINT_SITE_URL || '';
+    
+    // Determine which authentication method to use based on available credentials
+    const useAzureCert = Boolean(azureAppId && azureCertThumbprint && azureCertPassword);
+    const useClientSecret = Boolean(spClientId && spClientSecret);
+    
+    console.error(`Azure Certificate Auth Credentials Available: ${useAzureCert ? 'Yes' : 'No'}`);
+    console.error(`Client Secret Auth Credentials Available: ${useClientSecret ? 'Yes' : 'No'}`);
+    
+    // Prefer Azure certificate auth if both are available
+    if (useAzureCert) {
+        console.error("Using Azure AD Certificate Authentication");
+        return {
+            clientId: azureAppId,
+            certificateThumbprint: azureCertThumbprint,
+            certificatePassword: azureCertPassword,
+            tenantId: tenantId,
+            siteUrl: siteUrl,
+            authType: 'certificate'
+        };
+    } else {
+        console.error("Using Client Secret Authentication");
+        return {
+            clientId: spClientId,
+            clientSecret: spClientSecret,
+            tenantId: tenantId,
+            siteUrl: siteUrl,
+            authType: 'secret'
+        };
+    }
 }
 
 // Validate that required config values are present
 export function validateConfig(config: SharePointConfig): boolean {
-    const { clientId, clientSecret, tenantId } = config;
+    const { clientId, tenantId } = config;
+    let isValid = Boolean(clientId && tenantId);
     
-    const isValid = Boolean(clientId && clientSecret && tenantId);
+    if (config.authType === 'secret') {
+        isValid = isValid && Boolean(config.clientSecret);
+    } else if (config.authType === 'certificate') {
+        isValid = isValid && Boolean(config.certificateThumbprint && config.certificatePassword);
+    }
     
     if (!isValid) {
         console.error("ERROR: Missing SharePoint credentials!");
-        console.error("Provide via environment variables or CLI arguments like:");
-        console.error("--clientId=xxx --clientSecret=yyy --tenantId=zzz");
+        if (config.authType === 'secret') {
+            console.error("Provide client secret auth via environment variables:");
+            console.error("SHAREPOINT_CLIENT_ID, SHAREPOINT_CLIENT_SECRET, M365_TENANT_ID");
+            console.error("Or CLI arguments: --clientId=xxx --clientSecret=yyy --tenantId=zzz");
+        } else {
+            console.error("Provide certificate auth via environment variables:");
+            console.error("AZURE_APPLICATION_ID, AZURE_APPLICATION_CERTIFICATE_THUMBPRINT, AZURE_APPLICATION_CERTIFICATE_PASSWORD, M365_TENANT_ID");
+            console.error("Or CLI arguments: --azureAppId=xxx --azureCertThumbprint=yyy --azureCertPassword=zzz --tenantId=aaa");
+        }
     } else {
-        console.error("✅ SharePoint credentials loaded.");
+        console.error(`✅ SharePoint credentials loaded (${config.authType} authentication).`);
     }
     
     return isValid;

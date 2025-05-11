@@ -1,7 +1,7 @@
 // src/tools/updateListView.ts
 import request from 'request-promise';
 import { IToolResult, IListViewData, ISharePointField } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface UpdateListViewParams {
@@ -258,3 +258,4 @@ export async function updateListView(
 }
 
 export default updateListView;
+

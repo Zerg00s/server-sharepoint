@@ -1,7 +1,7 @@
 // src/tools/deleteList.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface DeleteListParams {
@@ -110,3 +110,4 @@ export async function deleteList(
 }
 
 export default deleteList;
+

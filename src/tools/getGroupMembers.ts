@@ -1,7 +1,7 @@
 // src/tools/getGroupMembers.ts
 import request from 'request-promise';
 import { IToolResult, ISharePointGroupMember } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetGroupMembersParams {
@@ -99,3 +99,4 @@ export async function getGroupMembers(
 }
 
 export default getGroupMembers;
+

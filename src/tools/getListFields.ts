@@ -1,7 +1,7 @@
 // src/tools/getListFields.ts
 import request from 'request-promise';
 import { ISharePointField, IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetListFieldsParams {
@@ -111,3 +111,4 @@ export async function getListFields(
 }
 
 export default getListFields;
+

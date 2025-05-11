@@ -61,6 +61,13 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Update Taxonomy Label      | ❌        |
 |                    | Delete Taxonomy Label      | ❌        |
 
+## Authentication Options
+
+The server supports two authentication methods:
+
+1. **Client Secret Authentication** - Traditional client ID and secret (App-only authentication)
+2. **Certificate Authentication** - More secure method using Azure AD App Registration with certificate
+
 ## Configuration steps
 
 ⚠️ You need to be a SharePoint tenant admin or a global admin to create a SharePoint app.
@@ -75,7 +82,9 @@ Connect-SPOService -Url https://<your-tenant>-admin.sharepoint.com/
 Set-SPOTenant -DisableCustomAppAuthentication $false
 ```
 
-### Create SharePoint-only App
+### Option 1: Client Secret Authentication (Will not work after April 2026)
+
+#### Create SharePoint-only App with Client Secret
 
 - Open `https://<your-tenant>.sharepoint.com/_layouts/15/appregnew.aspx`
 - Click `Generate` to create a new client ID and secret.
@@ -86,7 +95,7 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 - Click `Create` to create the app.
 - Copy the `Client ID` and `Client Secret` values to a safe place. You will need them later.
 
-### Grant App Permissions
+#### Grant App Permissions
 
 - Open `https://<your-tenant>.sharepoint.com/_layouts/15/appinv.aspx`
 - Paste the `Client ID` value in the `App ID` field and click `Lookup`.
@@ -100,12 +109,46 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 ```
 
 - Click `Create` and then `Trust It` to grant the app permissions.
-
 ![Trust it](IMG/image-5.png)
+
+#### Configure Environment Variables for Client Secret Auth
+
+Create a `.env` file in the root of the project with the following content:
+
+```
+SHAREPOINT_CLIENT_ID=your-client-id
+SHAREPOINT_CLIENT_SECRET=your-client-secret
+M365_TENANT_ID=your-tenant-id
+```
+
+### Option 2: Certificate Authentication
+
+Certificate-based authentication provides better security than client secrets. It uses a certificate to prove the identity of the application instead of a shared secret.
+
+#### Create Azure AD App with Certificate
+
+Use the provided PowerShell script to create the Azure AD app with certificate:
+
+```powershell
+.\Create-SPAppCertificate.ps1 -AppName "SharePoint-Server-MCP" -CertName "SharePoint-Server-MCP-Cert" -CertPassword "YourSecureP@ssw0rd!"
+```
+
+This script will
+
+1. Create a self-signed certificate in your certificate store
+2. Register an Azure AD application
+3. Add the certificate to the application
+4. Configure the required SharePoint permissions
+5. Generate configuration files with the necessary settings
+6. Output the `claude_desktop_config.json` that is compatible with Claude Desktop
+
+#### Grant Admin Consent
+
+After running the script, you'll get an Admin Consent URL. Open it in a browser and sign in as a Global Admin to grant consent for the permissions.
 
 ### Install Node.js
 
- Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
+Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
 
 ### Install and Configure Claude Desktop
 
@@ -116,6 +159,8 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 ![Config](IMG/image-1.png)
 - Open the claude_desktop_config.json config file in the editor.
 - Paste the following to the config and update the `mcpServers` section with your own values:
+
+#### For Client Secret Authentication (not recommended)
 
 ```json
 {
@@ -129,12 +174,51 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
       "env": {
         "SHAREPOINT_CLIENT_ID": "<your-client-id>",
         "SHAREPOINT_CLIENT_SECRET": "<your-client-secret>",
-        "SHAREPOINT_TENANT_ID": "<your-tenant-id>"
+        "M365_TENANT_ID": "<your-tenant-id>"
       }
     }
   }
 } 
 
+```json
+{
+  "mcpServers": {
+    "server-sharepoint": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "server-sharepoint"
+      ],
+      "env": {
+        "SHAREPOINT_CLIENT_ID": "<your-client-id>",
+        "SHAREPOINT_CLIENT_SECRET": "<your-client-secret>",
+        "M365_TENANT_ID": "<your-tenant-id>"
+      }
+    }
+  }
+} 
+```
+
+#### For Certificate Authentication
+
+```json
+{
+  "mcpServers": {
+    "server-sharepoint": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "server-sharepoint"
+      ],
+      "env": {
+        "AZURE_APPLICATION_ID": "<your-app-id>",
+        "AZURE_APPLICATION_CERTIFICATE_THUMBPRINT": "<your-certificate-thumbprint>",
+        "AZURE_APPLICATION_CERTIFICATE_PASSWORD": "<your-certificate-password>",
+        "M365_TENANT_ID": "<your-tenant-id>"
+      }
+    }
+  }
+} 
 ```
 
 > 💡[Learn how to get the tenant ID from Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/how-to-find-tenant)
@@ -222,6 +306,8 @@ npx @modelcontextprotocol/inspector node build/src/index.js
 - `npm install`
 - Update MCP config in `claude_desktop_config.json` file. Sample:
 
+For client secret authentication (Will not work after April 2026)
+
 ```json
 {
 "mcpServers": {
@@ -233,7 +319,28 @@ npx @modelcontextprotocol/inspector node build/src/index.js
       "env": {
         "SHAREPOINT_CLIENT_ID": "aaa2ce0f-7c97-4e51-acd9-4ac99e6831d0",
         "SHAREPOINT_CLIENT_SECRET": "bbb0OFF+aWkua2NJRERUMGduMmhsWDhGUTVPUHJZLXd5dldSemNPUw==",
-        "SHAREPOINT_TENANT_ID": "22bcd981-eaa6-475f-aac3-3afca0c35261"
+        "M365_TENANT_ID": "22bcd981-eaa6-475f-aac3-3afca0c35261"
+      }
+    }
+  }
+}
+```
+
+For certificate authentication (Recommended)
+
+```json
+{
+"mcpServers": {
+  "sharepoint": {
+      "command": "node",
+      "args": [
+        "C:\\trash\\server-sharepoint\\build\\index.js"
+      ],
+      "env": {
+        "AZURE_APPLICATION_ID": "5bc793c7-3eb0-4b86-88bf-b464b2459c4c",
+        "AZURE_APPLICATION_CERTIFICATE_THUMBPRINT": "3D38D1D8AC3228CAD35E527D1105101B0B90CE86",
+        "AZURE_APPLICATION_CERTIFICATE_PASSWORD": "TemporaryP@ssw0rd",
+        "M365_TENANT_ID": "11bcd981-eaa6-475f-aac3-3afca0c35261"
       }
     }
   }
@@ -242,5 +349,4 @@ npx @modelcontextprotocol/inspector node build/src/index.js
 
 - Make changes to the code
 - Build the code `npm run build`
-
-- `npx @modelcontextprotocol/inspector node build/src/index.js -y`
+- Test with MCP Inspector: `npx @modelcontextprotocol/inspector node build/src/index.js -y`

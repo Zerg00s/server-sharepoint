@@ -272,7 +272,7 @@ CertificateNotAfter = $($Certificate.NotAfter)
 # Add these values to your config.xml or environment variables:
 
 SHAREPOINT_CLIENT_ID = $($Application.AppId)
-SHAREPOINT_TENANT_ID = $tenantId
+M365_TENANT_ID = $tenantId
 SHAREPOINT_CERTIFICATE = $($Certificate.Thumbprint)
 SHAREPOINT_CERTIFICATE_PASSWORD = $CertificatePassword
 
@@ -376,3 +376,50 @@ catch {
     Write-Log $_.Exception.Message -ForegroundColor Red
     Write-Log $_.ScriptStackTrace -ForegroundColor Red
 }
+
+function Output-SampleMcpConfig {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$TenantId,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$AppId,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$Thumbprint,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$Password,
+        
+        [Parameter(Mandatory = $false)]
+        [string]$OutputPath = ".\claude_desktop_config.json"
+    )
+
+    $config = @{
+        "server-sharepoint" = @{
+            command = "npx"
+            args = @("-y", "server-sharepoint")
+            env = @{
+                "M365_TENANT_ID" = $TenantId
+                "AZURE_APPLICATION_ID" = $AppId
+                "AZURE_APPLICATION_CERTIFICATE_THUMBPRINT" = $Thumbprint
+                "AZURE_APPLICATION_CERTIFICATE_PASSWORD" = $Password
+            }
+        }
+    }
+
+    $json = $config | ConvertTo-Json -Depth 4
+    Set-Content -Path $OutputPath -Value $json -Encoding UTF8
+
+    Write-Log "Sample MCP config saved to: $OutputPath" -ForegroundColor Green
+}
+
+
+# Output configuration details
+Output-ConfigDetails -Application $application -Certificate $certificate -OutputPath $ConfigOutputPath -AdminConsentUrl $adminConsentUrl -CertificatePassword $CertPassword
+
+# Output sampleMCP-config.json
+Output-SampleMcpConfig -TenantId $graphContext.TenantId `
+                       -AppId $application.AppId `
+                       -Thumbprint $certificate.Thumbprint `
+                       -Password $CertPassword

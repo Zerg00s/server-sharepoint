@@ -1,7 +1,7 @@
 // src/tools/deleteNavigationLink.ts
 import request from 'request-promise';
 import { IToolResult } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface DeleteNavigationLinkParams {
@@ -231,3 +231,4 @@ export async function deleteNavigationLink(
 }
 
 export default deleteNavigationLink;
+

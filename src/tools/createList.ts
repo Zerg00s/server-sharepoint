@@ -1,7 +1,7 @@
 // src/tools/createList.ts
 import request from 'request-promise';
 import { IToolResult, IListCreationData } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth';
+import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface CreateListParams {

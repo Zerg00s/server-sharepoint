@@ -1,7 +1,7 @@
 // src/tools/getSite.ts
 import request from 'request-promise';
 import { ISharePointWebResponse, IToolResult } from '../interfaces';
-import { getSharePointHeaders } from '../auth';
+import { getSharePointHeaders } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetSiteParams {
@@ -22,7 +22,7 @@ export async function getSite(
     console.error("getSite tool called with URL:", url);
 
     try {
-        // Authenticate with SharePoint
+        // Authenticate with SharePoint using the auth factory
         const headers = await getSharePointHeaders(url, config);
         console.error("Headers prepared:", headers);
 

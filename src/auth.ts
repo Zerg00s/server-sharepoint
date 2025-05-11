@@ -1,7 +1,7 @@
 // src/auth.ts
 import * as spauth from 'node-sp-auth';
 import request from 'request-promise';
-import { SharePointConfig } from './config';
+import { SharePointConfig, SharePointSecretConfig } from './config';
 
 // Interface for authentication headers
 export interface AuthHeaders {
@@ -14,9 +14,9 @@ export interface AuthHeaders {
  * @param config The SharePoint configuration
  * @returns Authentication headers for API requests
  */
-export async function getSharePointHeaders(url: string, config: SharePointConfig): Promise<AuthHeaders> {
+export async function getSharePointHeaders(url: string, config: SharePointSecretConfig): Promise<AuthHeaders> {
     try {
-        console.error("Authenticating with SharePoint...");
+        console.error("Authenticating with SharePoint via client secret...");
         
         // Validate required configuration
         if (!config.clientId) {
