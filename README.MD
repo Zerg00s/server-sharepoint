@@ -84,6 +84,8 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 
 ### Option 1: Client Secret Authentication (Will not work after April 2026)
 
+This option requires the SharePoint administrator role.
+
 #### Create SharePoint-only App with Client Secret
 
 - Open `https://<your-tenant>.sharepoint.com/_layouts/15/appregnew.aspx`
@@ -111,19 +113,11 @@ Set-SPOTenant -DisableCustomAppAuthentication $false
 - Click `Create` and then `Trust It` to grant the app permissions.
 ![Trust it](IMG/image-5.png)
 
-#### Configure Environment Variables for Client Secret Auth
-
-Create a `.env` file in the root of the project with the following content:
-
-```
-SHAREPOINT_CLIENT_ID=your-client-id
-SHAREPOINT_CLIENT_SECRET=your-client-secret
-M365_TENANT_ID=your-tenant-id
-```
-
 ### Option 2: Certificate Authentication
 
 Certificate-based authentication provides better security than client secrets. It uses a certificate to prove the identity of the application instead of a shared secret.
+
+> ⚠️ This option requires the Global administrator role to provide the necessary permissions to the app.
 
 #### Create Azure AD App with Certificate
 
