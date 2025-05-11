@@ -29,8 +29,19 @@ export function loadConfig(): SharePointConfig {
 
     // Priority: CLI args → fallback: ENV
     const config = {
+        // Use with auth.ts
         clientId: args.clientId || process.env.SHAREPOINT_CLIENT_ID || '',
         clientSecret: args.clientSecret || process.env.SHAREPOINT_CLIENT_SECRET || '',
+        AzureAppId: args.clientId || process.env.AZURE_APPLICATION_ID || '',
+        
+        //TODO: Use with azure_cert_auth.ts (azure_cert_auth.ts needs to be implemented based on the sample from get-site-title.ts)
+        // TODO: azure_cert_auth.ts should similar to how auth.ts is implemented, in terms so that the MCP tools functions can be used with both
+        // auth.ts and azure_cert_auth.ts, depending on the authentication method used
+        // if clientId is set - it's auuth.ts
+        // if AzureAppId is set - it's azure_cert_auth.ts
+        AzureAppCertificateThumbprint: args.clientSecret || process.env.AZURE_APPLICATION_CERTIFICATE_THUMBPRINT || '',
+        AzureAppCertificatePassword: args.clientSecret || process.env.AZURE_APPLICATION_CERTIFICATE_PASSWORD || '',
+        
         tenantId: args.tenantId || process.env.SHAREPOINT_TENANT_ID || '',
         siteUrl: args.siteUrl || process.env.SHAREPOINT_SITE_URL || ''
     };

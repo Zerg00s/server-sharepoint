@@ -3,5 +3,8 @@
 .env.local
 .env.staging
 .env.test
+SharePointApp-Config.txt
+SharePointApp-Config.xml
+get-site-title.ts
 build
 node_modules
