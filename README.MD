@@ -50,6 +50,11 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Create List Item           | ✅        |
 |                    | Update List Item           | ✅        |
 |                    | Delete List Item           | ✅        |
+| List Content Types |                            | ❌        |
+|                    | Get All List Content Types | ❌        |
+|                    | Create List Content Type   | ❌        |
+|                    | Update List Content Type   | ❌        |
+|                    | Delete List Content Type   | ❌        |
 | Pages              |                            | ❌        |
 |                    | Create Modern Page         | ❌        |
 | Documents          |                            | ❌        |
