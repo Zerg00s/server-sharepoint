@@ -27,18 +27,19 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 | Lists              |                            | ✅        |
 |                    | Get All Lists              | ✅        |
 |                    | Create List                | ✅        |
+|                    | Update List                | ❌        |
 |                    | Get List Fields            | ✅        |
 |                    | Create List Field          | ✅        |
 |                    | Update List Field          | ✅        |
 |                    | Delete List Field          | ✅        |
 |                    | Set List Field formatting  | ❌        |
 |                    | Set List View formatting   | ❌        |
-|                    | Get List Views             | ✅        |
-|                    | Create List View           | ✅        |
-|                    | Update List View           | ✅        |
-|                    | Delete List View           | ✅        |
 |                    | Delete List                | ✅        |
 | List Views         |                            | ✅        |
+|                    | Get List Views             | ✅        |
+|                    | Delete List View           | ✅        |
+|                    | Create List View           | ✅        |
+|                    | Update List View           | ✅        |
 |                    | Get View Fields            | ✅        |
 |                    | Add View Field             | ✅        |
 |                    | Remove View Field          | ✅        |
