@@ -43,9 +43,21 @@ import getModernPage from './getModernPage'; // Tool for retrieving a specific p
 import deleteModernPage from './deleteModernPage';
 // Import content type tools
 import getListContentTypes from './getListContentTypes';
+import getListContentType from './getListContentType';
 import createListContentType from './createListContentType';
 import updateListContentType from './updateListContentType';
 import deleteListContentType from './deleteListContentType';
+// Import site content type tools
+import getSiteContentTypes from './getSiteContentTypes';
+import getSiteContentType from './getSiteContentType';
+// createSiteContentType removed (buggy/useless tool)
+import updateSiteContentType from './updateSiteContentType';
+import deleteSiteContentType from './deleteSiteContentType';
+// Import new regional settings and features tools
+import getRegionalSettings from './getRegionalSettings';
+import getSiteCollectionFeatures from './getSiteCollectionFeatures';
+import getSiteFeatures from './getSiteFeatures';
+import getSiteFeature from './getSiteFeature';
 
 // Export all tools
 export {
@@ -95,9 +107,21 @@ export {
     deleteModernPage,
     // Content type management tools
     getListContentTypes,
+    getListContentType,
     createListContentType,
     updateListContentType,
-    deleteListContentType
+    deleteListContentType,
+    // Site content type management tools
+    getSiteContentTypes,
+    getSiteContentType,
+    // createSiteContentType removed (buggy/useless tool)
+    updateSiteContentType,
+    deleteSiteContentType,
+    // Regional settings and features tools
+    getRegionalSettings,
+    getSiteCollectionFeatures,
+    getSiteFeatures,
+    getSiteFeature
 };
 
 // Also export the parameter interfaces for better type safety
@@ -149,6 +173,18 @@ export type { GetModernPageParams } from './getModernPage';
 export type { DeleteModernPageParams } from './deleteModernPage';
 // Content type management tool params
 export type { GetListContentTypesParams } from './getListContentTypes';
+export type { GetListContentTypeParams } from './getListContentType';
 export type { CreateListContentTypeParams } from './createListContentType';
 export type { UpdateListContentTypeParams } from './updateListContentType';
 export type { DeleteListContentTypeParams } from './deleteListContentType';
+// Site content type management tool params
+export type { GetSiteContentTypesParams } from './getSiteContentTypes';
+export type { GetSiteContentTypeParams } from './getSiteContentType';
+// export type { CreateSiteContentTypeParams } from './createSiteContentType'; // Removed (buggy/useless tool)
+export type { UpdateSiteContentTypeParams } from './updateSiteContentType';
+export type { DeleteSiteContentTypeParams } from './deleteSiteContentType';
+// Regional settings and features tool params
+export type { GetRegionalSettingsParams } from './getRegionalSettings';
+export type { GetSiteCollectionFeaturesParams } from './getSiteCollectionFeatures';
+export type { GetSiteFeaturesParams } from './getSiteFeatures';
+export type { GetSiteFeatureParams } from './getSiteFeature';

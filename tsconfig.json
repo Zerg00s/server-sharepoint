@@ -11,6 +11,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "debug.ts"],
+  "include": ["src/**/*", "debug.ts", "src/debug-*.ts"],
   "exclude": ["node_modules"]
 }

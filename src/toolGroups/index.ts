@@ -8,6 +8,8 @@ import { registerPageTools } from './pageTools';
 import { registerFieldTools } from './fieldTools';
 import { registerBatchTools } from './batchTools';
 import { registerContentTypeTools } from './contentTypeTools';
+import { registerSiteContentTypeTools } from './siteContentTypeTools';
+import { registerRegionalAndFeaturesTools } from './regionalAndFeaturesTools';
 
 /**
  * Register all tool groups with the server
@@ -35,4 +37,10 @@ export function registerAllToolGroups(server: McpServer, config: SharePointConfi
     
     // Register content type management tools
     registerContentTypeTools(server, config);
+    
+    // Register site content type management tools
+    registerSiteContentTypeTools(server, config);
+    
+    // Register regional settings and features management tools
+    registerRegionalAndFeaturesTools(server, config);
 }

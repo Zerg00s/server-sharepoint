@@ -9,7 +9,8 @@
     "build": "tsc",
     "start": "node build/index.js",
     "debug": "tsx src/debug.ts",
-    "debug-secret": "tsx src/debug-secret.ts"
+    "debug-secret": "tsx src/debug-secret.ts",
+    "debug-site-ct": "tsx src/debug-site-contenttypes.ts"
   },
   "author": "",
   "license": "ISC",

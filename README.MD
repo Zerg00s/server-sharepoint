@@ -12,87 +12,141 @@ Most powerful SharePoint MCP server enabling seamless interaction with SharePoin
 
 This MCP server is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
 
-## Implementation
+## SharePoint Operations Availability
 
-| Component          | Operation                  | Available |
-|--------------------|----------------------------|-----------|
-| Users              |                            | ✅        |
-|                    | List Site Users by Role    | ✅        |
-|                    | List Site Groups           | ✅        |
-|                    | Get Group Members          | ✅        |
-|                    | Add Group Member           | ✅        |
-|                    | Remove Group Member        | ✅        |
-| Sites              |                            | ✅        |
-|                    | Get Site Details           | ✅        |
-|                    | Update Site Properties     | ✅        |
-|                    | Get Global Navigation Links| ✅        |
-|                    | Get Quick Navigation Links | ✅        |
-|                    | Add Navigation Link        | ✅        |
-|                    | Update Navigation Link     | ✅        |
-|                    | Delete Navigation Link     | ✅        |
-|                    | Get Subsites               | ✅        |
-|                    | Create Subsite             | ❌        |
-|                    | Delete Subsite             | ✅        |
-| Lists              |                            | ✅        |
-|                    | Get All Lists              | ✅        |
-|                    | Create List                | ✅        |
-|                    | Add Site Content Type to list  ✅      |
-|                    | Remove Content Type from list  ✅      |
-|                    | Add Field to List Content Type ✅      |
-|                    | Remove Field from List Content Type ❌ |
-|                    | Update List                | ✅        |
-|                    | Get List Fields            | ✅        |
-|                    | Create List Field          | ✅        |
-|                    | Update List Field          | ✅        |
-|                    | Delete List Field          | ✅        |
-|                    | Set List Field formatting  | ❌        |
-|                    | Set List View formatting   | ❌        |
-|                    | Delete List                | ✅        |
-| List Views         |                            | ✅        |
-|                    | Get List Views             | ✅        |
-|                    | Delete List View           | ✅        |
-|                    | Create List View           | ✅        |
-|                    | Update List View           | ✅        |
-|                    | Get View Fields            | ✅        |
-|                    | Add View Field             | ✅        |
-|                    | Remove View Field          | ✅        |
-|                    | Remove All View Fields     | ✅        |
-|                    | Move View Field            | ✅        |
-| List Content Types |                            | ✅        |
-|                    | Get All List Content Types | ✅        |
-|                    | Create List Content Type   | ✅        |
-|                    | Update List Content Type   | ✅        |
-|                    | Delete List Content Type   | ✅        |
-| List Items         |                            | ✅        |
-|                    | Get All List Items         | ✅        |
-|                    | Create List Item           | ✅        |
-|                    | Update List Item           | ✅        |
-|                    | Delete List Item           | ✅        |
-| Site Content Types |                            | ❌        |
-|                    | Get All Site Content Types | ❌        |
-|                    | Create Site Content Type   | ❌        |
-|                    | Update Site Content Type   | ❌        |
-|                    | Delete Site Content Type   | ❌        |
-| Pages              |                            | ✅        |
-|                    | Create Modern Page         | ✅        |
-|                    | Delete Modern Page         | ✅        |
-|                    | List Modern Pages          | ✅        |
-|                    | Add Page Web Part          | ❌        |
-|                    | Delete Page Web Part       | ❌        |
-|                    | Move Page Web Part         | ❌        |
-|                    | Update Page Web Part       | ❌        |
-| Documents          |                            | ❌        |
-|                    | Create Document            | ❌        |
-|                    | Upload Document            | ❌        |
-|                    | Move Document              | ❌        |
-|                    | Copy Document              | ❌        |
-| Taxonomy           |                            | ❌        |
-|                    | Get Taxonomy Group         | ❌        |
-|                    | Create Taxonomy Label      | ❌        |
-|                    | Update Taxonomy Label      | ❌        |
-|                    | Delete Taxonomy Label      | ❌        |
+### Users
 
-## Authentication Options
+| Operation | Available |
+|-----------|-----------|
+| List Site Users by Role | ✅ |
+| List Site Groups | ✅ |
+| Get Group Members | ✅ |
+| Add Group Member | ✅ |
+| Remove Group Member | ✅ |
+
+### Sites
+
+| Operation | Available |
+|-----------|-----------|
+| Get Site Details | ✅ |
+| Update Site Properties | ✅ |
+| Get Global Navigation Links | ✅ |
+| Get Quick Navigation Links | ✅ |
+| Add Navigation Link | ✅ |
+| Update Navigation Link | ✅ |
+| Delete Navigation Link | ✅ |
+| Get Subsites | ✅ |
+| Create Subsite | ❌ |
+| Delete Subsite | ✅ |
+
+### Regional Settings
+
+| Operation | Available |
+|-----------|-----------|
+| Get Regional Settings | ✅ |
+
+### Features
+
+| Operation | Available |
+|-----------|-----------|
+| Get Site Collection Features | ✅ |
+| Get All Site Features | ✅ |
+| Get Site Feature | ✅ |
+| Get All Site Feature | ✅ |
+
+### Lists
+
+| Operation | Available | Notes |
+|-----------|-----------|--|
+| Get All Lists | ✅ |  |
+| Create List | ✅ |  |
+| Add Site Content Type to list | ✅ |  |
+| Remove Content Type from list | ✅ |  |
+| Add Field to List Content Type | ❌ |  |
+| Remove Field from List Content Type | ❌ |  |
+| Update List | ✅ |  |
+| Get List Fields | ✅ |  |
+| Create List Field | ✅ | Basic scenarios only  |
+| Update List Field | ✅ |  |
+| Delete List Field | ✅ |  |
+| Set List Field formatting | ❌ |  |
+| Set List View formatting | ❌ |  |
+| Delete List | ✅ |  |
+
+### List Views
+
+| Operation | Available |
+|-----------|-----------|
+| Get List Views | ✅ |
+| Delete List View | ✅ |
+| Create List View | ✅ |
+| Update List View | ✅ |
+| Get View Fields | ✅ |
+| Add View Field | ✅ |
+| Remove View Field | ✅ |
+| Remove All View Fields | ✅ |
+| Move View Field | ✅ |
+
+### List Content Types
+
+| Operation | Available | Notes |
+|-----------|-----------|--|
+| Get All List Content Types | ✅ | |
+| Get List Content Type | ✅ | |
+| Create List Content Type | ❌ | Change CT title and group only |
+| Update List Content Type | ✅ | |
+| Delete List Content Type | ✅ | |
+
+### List Items
+
+| Operation | Available |
+|-----------|-----------|
+| Get All List Items | ✅ |
+| Create List Item | ✅ |
+| Update List Item | ✅ |
+| Delete List Item | ✅ |
+
+### Site Content Types
+
+| Operation | Available | Notes |
+|-----------|-----------|-|
+| Get All Site Content Types | ✅ | |
+| Get Site Content Type | ✅ | |
+| Create Site Content Type | ❌ | |
+| Update Site Content Type | ✅ | Change CT title and group only |
+| Delete Site Content Type | ✅ | |
+
+### Pages
+
+| Operation | Available |
+|-----------|-----------|
+| Create Modern Page | ✅ |
+| Delete Modern Page | ✅ |
+| List Modern Pages | ✅ |
+| Add Page Web Part | ❌ |
+| Delete Page Web Part | ❌ |
+| Move Page Web Part | ❌ |
+| Update Page Web Part | ❌ |
+
+### Documents
+
+| Operation | Available |
+|-----------|-----------|
+| Create Document | ❌ |
+| Upload Document | ❌ |
+| Move Document | ❌ |
+| Copy Document | ❌ |
+
+### Taxonomy
+
+| Operation | Available |
+|-----------|-----------|
+| Get Taxonomy Group | ❌ |
+| Create Taxonomy Label | ❌ |
+| Update Taxonomy Label | ❌ |
+| Delete Taxonomy Label | ❌ |
+
+### Authentication Options
 
 The server supports two authentication methods:
 
@@ -245,61 +299,6 @@ Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
 - Open Claude Desktop and ask a question like `Get me the list of lists from https://<your-tenant>.sharepoint.com/sites/Dashboard-Communication. Present the results in a table form. don't use code`.
 
 ![Sample result](IMG/image-6.png)
-
-## Available Tools
-
-### Site Management
-
-- `getSite` - Get detailed information about a SharePoint site
-- `updateSite` - Update site properties including Title, Description, and Logo URL
-- `getSubsites` - Get all subsites from a site
-- `deleteSubsite` - Delete a subsite (requires confirmation)
-- `getGlobalNavigationLinks` - Get global (top) navigation links
-- `getQuickNavigationLinks` - Get quick (left) navigation links
-- `addNavigationLink` - Add a navigation link to global or quick navigation
-- `updateNavigationLink` - Update an existing navigation link
-- `deleteNavigationLink` - Delete a navigation link
-- `getSiteUsers` - Get users from a site with optional filtering by role (Owners, Members, Visitors)
-- `getSiteGroups` - Get all SharePoint groups for a site
-
-### List Management
-
-- `getLists` - Get all available lists on a SharePoint site
-- `createList` - Create a new list or document library with custom settings and optional custom URL
-- `deleteList` - Delete a list or document library (requires confirmation)
-- `getListFields` - Get detailed information about fields/columns in a list
-- `createListField` - Create a new field/column with a two-step process: first with a clean name for proper internal name generation, then updating to the desired display name with spaces
-- `updateListField` - Update a field including display name, choices, and other properties
-- `deleteListField` - Delete a field/column from a list (requires confirmation)
-- `getListViews` - Get all views for a list with optional field details
-- `createListView` - Create a custom view with selected fields and filters
-- `updateListView` - Update an existing view's settings and fields
-- `deleteListView` - Delete a view from a list (cannot delete default views)
-
-### List View Field Management
-
-- `getViewFields` - Get all fields in a specific list view
-- `addViewField` - Add a field to a list view
-- `removeViewField` - Remove a field from a list view
-- `removeAllViewFields` - Remove all fields from a list view
-- `moveViewFieldTo` - Move a field to a specific position in a list view
-
-### List Item Management
-
-- `getListItems` - Get all items from a specific list
-- `createListItem` - Create a new item with custom field values
-- `updateListItem` - Update an existing item's field values
-- `deleteListItem` - Remove an item from a list
-
-### User Management
-
-- `getGroupMembers` - Get all members of a specific SharePoint group
-- `addGroupMember` - Add a user to a SharePoint group
-- `removeGroupMember` - Remove a user from a SharePoint group
-
-### Page Management
-
-- `createModernPage` - Create a modern page with customizable layout, content, and publishing options
 
 ----------------------------------------------------------------
 

@@ -6,11 +6,13 @@ import { SharePointConfig } from '../config';
 // Import content type-related tools
 import {
     getListContentTypes,
+    getListContentType,
     createListContentType,
     updateListContentType,
     deleteListContentType,
     // Types
     GetListContentTypesParams,
+    GetListContentTypeParams,
     CreateListContentTypeParams,
     UpdateListContentTypeParams,
     DeleteListContentTypeParams
@@ -35,6 +37,20 @@ export function registerContentTypeTools(server: McpServer, config: SharePointCo
         },
         async (params: GetListContentTypesParams) => {
             return await getListContentTypes(params, config);
+        }
+    );
+
+    // Add getListContentType tool
+    server.tool(
+        "getListContentType",
+        "Get a specific content type from a SharePoint list",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            listTitle: z.string().describe("Title of the SharePoint list to retrieve content type from"),
+            contentTypeId: z.string().describe("ID of the content type to retrieve")
+        },
+        async (params: GetListContentTypeParams) => {
+            return await getListContentType(params, config);
         }
     );
 
