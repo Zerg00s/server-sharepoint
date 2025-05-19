@@ -27,7 +27,7 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 | Lists              |                            | ✅        |
 |                    | Get All Lists              | ✅        |
 |                    | Create List                | ✅        |
-|                    | Update List                | ❌        |
+|                    | Update List                | ✅        |
 |                    | Get List Fields            | ✅        |
 |                    | Create List Field          | ✅        |
 |                    | Update List Field          | ✅        |
@@ -55,8 +55,14 @@ This is a MCP server for Claude Desktop that allows you to interact with SharePo
 |                    | Create List Content Type   | ❌        |
 |                    | Update List Content Type   | ❌        |
 |                    | Delete List Content Type   | ❌        |
-| Pages              |                            | ❌        |
-|                    | Create Modern Page         | ❌        |
+| Pages              |                            | ✅        |
+|                    | Create Modern Page         | ✅        |
+|                    | Delete Modern Page         | ✅        |
+|                    | List Modern Pages          | ✅        |
+|                    | Add Page Web Part          | ❌        |
+|                    | Delete Page Web Part       | ❌        |
+|                    | Move Page Web Part         | ❌        |
+|                    | Update Page Web Part       | ❌        |
 | Documents          |                            | ❌        |
 |                    | Create Document            | ❌        |
 |                    | Upload Document            | ❌        |
@@ -271,6 +277,10 @@ Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
 - `getGroupMembers` - Get all members of a specific SharePoint group
 - `addGroupMember` - Add a user to a SharePoint group
 - `removeGroupMember` - Remove a user from a SharePoint group
+
+### Page Management
+
+- `createModernPage` - Create a modern page with customizable layout, content, and publishing options
 
 ----------------------------------------------------------------
 

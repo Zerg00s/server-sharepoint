@@ -6,6 +6,9 @@ import getListFields from './getListFields';
 import updateListField from './updateListField';
 import updateListItem from './updateListItem';
 import createListItem from './createListItem';
+import batchCreateListItems from './batchCreateListItems';
+import batchUpdateListItems from './batchUpdateListItems';
+import batchDeleteListItems from './batchDeleteListItems';
 import createList from './createList';
 import createListView from './createListView';
 import updateListView from './updateListView';
@@ -25,6 +28,7 @@ import getQuickNavigationLinks from './getQuickNavigationLinks';
 import getSubsites from './getSubsites';
 import deleteSubsite from './deleteSubsite';
 import updateSite from './updateSite';
+import updateList from './updateList';
 import addNavigationLink from './addNavigationLink';
 import updateNavigationLink from './updateNavigationLink';
 import deleteNavigationLink from './deleteNavigationLink';
@@ -33,6 +37,10 @@ import addViewField from './addViewField';
 import removeViewField from './removeViewField';
 import removeAllViewFields from './removeAllViewFields';
 import moveViewFieldTo from './moveViewFieldTo';
+import createModernPage from './createModernPage';
+import getModernPages from './getModernPages';
+import getModernPage from './getModernPage'; // Tool for retrieving a specific page
+import deleteModernPage from './deleteModernPage';
 
 // Export all tools
 export {
@@ -43,6 +51,9 @@ export {
     updateListField,
     updateListItem,
     createListItem,
+    batchCreateListItems,
+    batchUpdateListItems,
+    batchDeleteListItems,
     createList,
     createListView,
     updateListView,
@@ -62,6 +73,7 @@ export {
     getSubsites,
     deleteSubsite,
     updateSite,
+    updateList,
     addNavigationLink,
     updateNavigationLink,
     deleteNavigationLink,
@@ -70,7 +82,12 @@ export {
     addViewField,
     removeViewField,
     removeAllViewFields,
-    moveViewFieldTo
+    moveViewFieldTo,
+    // Page management tools
+    createModernPage,
+    getModernPages,
+    getModernPage,
+    deleteModernPage
 };
 
 // Also export the parameter interfaces for better type safety
@@ -81,6 +98,9 @@ export type { GetListFieldsParams } from './getListFields';
 export type { UpdateListFieldParams } from './updateListField';
 export type { UpdateListItemParams } from './updateListItem';
 export type { CreateListItemParams } from './createListItem';
+export type { BatchCreateListItemsParams } from './batchCreateListItems';
+export type { BatchUpdateListItemsParams } from './batchUpdateListItems';
+export type { BatchDeleteListItemsParams } from './batchDeleteListItems';
 export type { CreateListParams } from './createList';
 export type { CreateListViewParams } from './createListView';
 export type { UpdateListViewParams } from './updateListView';
@@ -100,6 +120,7 @@ export type { GetQuickNavigationLinksParams } from './getQuickNavigationLinks';
 export type { GetSubsitesParams } from './getSubsites';
 export type { DeleteSubsiteParams } from './deleteSubsite';
 export type { UpdateSiteParams } from './updateSite';
+export type { UpdateListParams } from './updateList';
 export type { AddNavigationLinkParams } from './addNavigationLink';
 export type { UpdateNavigationLinkParams } from './updateNavigationLink';
 export type { DeleteNavigationLinkParams } from './deleteNavigationLink';
@@ -109,3 +130,10 @@ export type { AddViewFieldParams } from './addViewField';
 export type { RemoveViewFieldParams } from './removeViewField';
 export type { RemoveAllViewFieldsParams } from './removeAllViewFields';
 export type { MoveViewFieldToParams } from './moveViewFieldTo';
+// Page management tool params
+export type { CreateModernPageParams } from './createModernPage';
+export type { GetModernPagesParams } from './getModernPages';
+export type { GetModernPageParams } from './getModernPage';
+
+
+export type { DeleteModernPageParams } from './deleteModernPage';

@@ -1,6 +1,7 @@
 // src/auth.ts
 import * as spauth from 'node-sp-auth';
 import request from 'request-promise';
+import axios from 'axios';
 import { SharePointConfig, SharePointSecretConfig } from './config';
 
 // Interface for authentication headers
@@ -104,28 +105,27 @@ export async function getRequestDigest(url: string, headers: AuthHeaders): Promi
         const digestUrl = `${url}/_api/contextinfo`;
         console.error(`Requesting digest from: ${digestUrl}`);
         
-        const digestResponse = await request({
+        const digestResponse = await axios({
             url: digestUrl,
             method: 'POST',
-            headers: { ...headers, 'Content-Type': undefined },
-            json: true,
-            timeout: 30000,
-            // Adding full response option to get more diagnostic info if needed
-            resolveWithFullResponse: true,
-            simple: false // Don't throw on non-2xx responses
+            headers: { 
+                ...headers, 
+                'Accept': 'application/json;odata=verbose' 
+            },
+            timeout: 30000
         });
         
         // Check the response status
-        if (digestResponse.statusCode >= 400) {
-            throw new Error(`HTTP Error ${digestResponse.statusCode}: ${JSON.stringify(digestResponse.body)}`);
+        if (digestResponse.status >= 400) {
+            throw new Error(`HTTP Error ${digestResponse.status}: ${JSON.stringify(digestResponse.data)}`);
         }
         
-        if (!digestResponse.body || !digestResponse.body.d || !digestResponse.body.d.GetContextWebInformation) {
-            console.error("Unexpected digest response format:", JSON.stringify(digestResponse.body));
+        if (!digestResponse.data || !digestResponse.data.d || !digestResponse.data.d.GetContextWebInformation) {
+            console.error("Unexpected digest response format:", JSON.stringify(digestResponse.data));
             throw new Error("Invalid digest response format");
         }
         
-        const digestValue = digestResponse.body.d.GetContextWebInformation.FormDigestValue;
+        const digestValue = digestResponse.data.d.GetContextWebInformation.FormDigestValue;
         console.error("Request digest obtained successfully");
         
         return digestValue;

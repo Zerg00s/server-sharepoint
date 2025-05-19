@@ -13,6 +13,9 @@ import {
     updateListField,
     updateListItem,
     createListItem,
+    batchCreateListItems,
+    batchUpdateListItems,
+    batchDeleteListItems,
     createList,
     createListView,
     updateListView,
@@ -32,6 +35,7 @@ import {
     getSubsites,
     deleteSubsite,
     updateSite,
+    updateList,
     addNavigationLink,
     updateNavigationLink,
     deleteNavigationLink,
@@ -41,6 +45,12 @@ import {
     removeViewField,
     removeAllViewFields,
     moveViewFieldTo,
+    // Page management tools
+    createModernPage,
+    getModernPages,
+    getModernPage,          // Tool for retrieving a specific page
+    deleteModernPage,
+    // Type imports
     GetSiteParams,
     GetListsParams,
     GetListItemsParams,
@@ -48,6 +58,9 @@ import {
     UpdateListFieldParams,
     UpdateListItemParams,
     CreateListItemParams,
+    BatchCreateListItemsParams,
+    BatchUpdateListItemsParams,
+    BatchDeleteListItemsParams,
     CreateListParams,
     CreateListViewParams,
     UpdateListViewParams,
@@ -67,6 +80,7 @@ import {
     GetSubsitesParams,
     DeleteSubsiteParams,
     UpdateSiteParams,
+    UpdateListParams,
     AddNavigationLinkParams,
     UpdateNavigationLinkParams,
     DeleteNavigationLinkParams,
@@ -75,8 +89,13 @@ import {
     AddViewFieldParams,
     RemoveViewFieldParams,
     RemoveAllViewFieldsParams,
-    MoveViewFieldToParams
-// Import from tools without .js extension
+    MoveViewFieldToParams,
+    // Page management tool params
+    CreateModernPageParams,
+    GetModernPagesParams,
+    GetModernPageParams,    // Interface for retrieving a page
+    DeleteModernPageParams
+
 } from './tools';
 
 // Get the SharePoint configuration
@@ -220,6 +239,53 @@ if (validateConfig(config)) {
         },
         async (params: CreateListItemParams) => {
             return await createListItem(params, config);
+        }
+    );
+
+    // Add batchCreateListItems tool
+    server.tool(
+        "batchCreateListItems",
+        "Create multiple items in a SharePoint list using a single batch request",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            listTitle: z.string().describe("Title of the SharePoint list"),
+            items: z.array(z.record(z.any())).describe("Array of objects containing field names and values for the new items")
+        },
+        async (params: BatchCreateListItemsParams) => {
+            return await batchCreateListItems(params, config);
+        }
+    );
+
+    // Add batchUpdateListItems tool
+    server.tool(
+        "batchUpdateListItems",
+        "Update multiple items in a SharePoint list using a single batch request",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            listTitle: z.string().describe("Title of the SharePoint list"),
+            items: z.array(
+                z.object({
+                    id: z.number().int().positive().describe("ID of the item to update"),
+                    data: z.record(z.any()).describe("Key-value pairs of field names and values to update")
+                })
+            ).describe("Array of objects containing item IDs and update data")
+        },
+        async (params: BatchUpdateListItemsParams) => {
+            return await batchUpdateListItems(params, config);
+        }
+    );
+
+    // Add batchDeleteListItems tool
+    server.tool(
+        "batchDeleteListItems",
+        "Delete multiple items from a SharePoint list using a single batch request",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            listTitle: z.string().describe("Title of the SharePoint list"),
+            itemIds: z.array(z.number().int().positive()).describe("Array of item IDs to delete")
+        },
+        async (params: BatchDeleteListItemsParams) => {
+            return await batchDeleteListItems(params, config);
         }
     );
 
@@ -494,6 +560,30 @@ if (validateConfig(config)) {
         }
     );
     
+    // Add updateList tool
+    server.tool(
+        "updateList",
+        "Update a SharePoint list properties (Title, Description, versioning settings, etc.)",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            listTitle: z.string().describe("Title of the SharePoint list to update"),
+            updateData: z.object({
+                Title: z.string().optional().describe("New title for the list"),
+                Description: z.string().optional().describe("New description for the list"),
+                EnableVersioning: z.boolean().optional().describe("Whether to enable versioning"),
+                EnableMinorVersions: z.boolean().optional().describe("Whether to enable minor versions"),
+                EnableModeration: z.boolean().optional().describe("Whether to enable content approval"),
+                DraftVersionVisibility: z.number().optional().describe("Draft visibility: 0=Reader, 1=Author, 2=Approver"),
+                ContentTypesEnabled: z.boolean().optional().describe("Whether to enable content types"),
+                Hidden: z.boolean().optional().describe("Whether the list is hidden"),
+                Ordered: z.boolean().optional().describe("Whether list items can be manually ordered")
+            }).describe("List properties to update")
+        },
+        async (params: UpdateListParams) => {
+            return await updateList(params, config);
+        }
+    );
+    
     // Add addNavigationLink tool
     server.tool(
         "addNavigationLink",
@@ -619,6 +709,72 @@ if (validateConfig(config)) {
             return await moveViewFieldTo(params, config);
         }
     );
+
+    // Add createModernPage tool
+    server.tool(
+        "createModernPage",
+        "Create a modern page in SharePoint",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            title: z.string().describe("Title of the page"),
+            fileName: z.string().optional().describe("Optional filename for the page (e.g., 'sample.aspx')"),
+            pageLayoutType: z.string().optional().describe("Page layout type (Article, Home, SingleWebPartAppPage, etc.)"),
+            description: z.string().optional().describe("Description of the page"),
+            thumbnailUrl: z.string().optional().describe("URL for the page thumbnail/banner image"),
+            promotedState: z.number().optional().describe("Promotion state: 0=Not promoted, 1=Promoted, 2=Promoted to news"),
+            publishPage: z.boolean().optional().describe("Whether to publish the page after creation"),
+            content: z.string().optional().describe("HTML content for the page")
+        },
+        async (params: CreateModernPageParams) => {
+            return await createModernPage(params, config);
+        }
+    );
+    
+    // Add getModernPages tool
+    server.tool(
+        "getModernPages",
+        "Get modern pages from a SharePoint site",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            pageTitle: z.string().optional().describe("Optional - filter by page title"),
+            limit: z.number().optional().describe("Maximum number of pages to return")
+        },
+        async (params: GetModernPagesParams) => {
+            return await getModernPages(params, config);
+        }
+    );
+
+    // Add getModernPage tool
+    server.tool(
+        "getModernPage",
+        "Get a specific modern page by ID from a SharePoint site",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            pageId: z.number().int().positive().describe("ID of the page to retrieve")
+        },
+        async (params: GetModernPageParams) => {
+            return await getModernPage(params, config);
+        }
+    );
+
+    // Note: Updating page web parts is not supported via the SharePoint REST API.
+    // The basic content can be set when creating a page using the createModernPage tool with the content parameter.
+
+    // Add deleteModernPage tool
+    server.tool(
+        "deleteModernPage",
+        "Delete a modern page from SharePoint",
+        {
+            url: z.string().url().describe("URL of the SharePoint website"),
+            pageId: z.number().int().positive().describe("ID of the page to delete"),
+            confirmation: z.string().describe("Confirmation string that must match the page ID")
+        },
+        async (params: DeleteModernPageParams) => {
+            return await deleteModernPage(params, config);
+        }
+    );
+
+    // Note: We cannot reliably list or delete web parts due to SharePoint API limitations.
 } else {
     console.error("❌ SharePoint credentials are invalid. No tools will be registered.");
 }
