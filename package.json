@@ -7,7 +7,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "debug": "tsx src/debug.ts",
+    "debug-secret": "tsx src/debug-secret.ts"
   },
   "author": "",
   "license": "ISC",

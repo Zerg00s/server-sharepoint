@@ -41,6 +41,11 @@ import createModernPage from './createModernPage';
 import getModernPages from './getModernPages';
 import getModernPage from './getModernPage'; // Tool for retrieving a specific page
 import deleteModernPage from './deleteModernPage';
+// Import content type tools
+import getListContentTypes from './getListContentTypes';
+import createListContentType from './createListContentType';
+import updateListContentType from './updateListContentType';
+import deleteListContentType from './deleteListContentType';
 
 // Export all tools
 export {
@@ -87,7 +92,12 @@ export {
     createModernPage,
     getModernPages,
     getModernPage,
-    deleteModernPage
+    deleteModernPage,
+    // Content type management tools
+    getListContentTypes,
+    createListContentType,
+    updateListContentType,
+    deleteListContentType
 };
 
 // Also export the parameter interfaces for better type safety
@@ -137,3 +147,8 @@ export type { GetModernPageParams } from './getModernPage';
 
 
 export type { DeleteModernPageParams } from './deleteModernPage';
+// Content type management tool params
+export type { GetListContentTypesParams } from './getListContentTypes';
+export type { CreateListContentTypeParams } from './createListContentType';
+export type { UpdateListContentTypeParams } from './updateListContentType';
+export type { DeleteListContentTypeParams } from './deleteListContentType';

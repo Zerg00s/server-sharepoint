@@ -12,3 +12,4 @@ claude_desktop_config.json
 build
 node_modules
 debug.ts
+debug-secret.ts

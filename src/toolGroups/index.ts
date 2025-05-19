@@ -7,6 +7,7 @@ import { registerViewTools } from './viewTools';
 import { registerPageTools } from './pageTools';
 import { registerFieldTools } from './fieldTools';
 import { registerBatchTools } from './batchTools';
+import { registerContentTypeTools } from './contentTypeTools';
 
 /**
  * Register all tool groups with the server
@@ -31,4 +32,7 @@ export function registerAllToolGroups(server: McpServer, config: SharePointConfi
     
     // Register batch operation tools
     registerBatchTools(server, config);
+    
+    // Register content type management tools
+    registerContentTypeTools(server, config);
 }

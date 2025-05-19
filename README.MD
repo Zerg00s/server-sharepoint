@@ -36,6 +36,10 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Lists              |                            | ✅        |
 |                    | Get All Lists              | ✅        |
 |                    | Create List                | ✅        |
+|                    | Add Site Content Type to list  ✅      |
+|                    | Remove Content Type from list  ✅      |
+|                    | Add Field to List Content Type ✅      |
+|                    | Remove Field from List Content Type ❌ |
 |                    | Update List                | ✅        |
 |                    | Get List Fields            | ✅        |
 |                    | Create List Field          | ✅        |
@@ -54,16 +58,21 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 |                    | Remove View Field          | ✅        |
 |                    | Remove All View Fields     | ✅        |
 |                    | Move View Field            | ✅        |
+| List Content Types |                            | ✅        |
+|                    | Get All List Content Types | ✅        |
+|                    | Create List Content Type   | ✅        |
+|                    | Update List Content Type   | ✅        |
+|                    | Delete List Content Type   | ✅        |
 | List Items         |                            | ✅        |
 |                    | Get All List Items         | ✅        |
 |                    | Create List Item           | ✅        |
 |                    | Update List Item           | ✅        |
 |                    | Delete List Item           | ✅        |
-| List Content Types |                            | ❌        |
-|                    | Get All List Content Types | ❌        |
-|                    | Create List Content Type   | ❌        |
-|                    | Update List Content Type   | ❌        |
-|                    | Delete List Content Type   | ❌        |
+| Site Content Types |                            | ❌        |
+|                    | Get All Site Content Types | ❌        |
+|                    | Create Site Content Type   | ❌        |
+|                    | Update Site Content Type   | ❌        |
+|                    | Delete Site Content Type   | ❌        |
 | Pages              |                            | ✅        |
 |                    | Create Modern Page         | ✅        |
 |                    | Delete Modern Page         | ✅        |
@@ -75,6 +84,7 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Documents          |                            | ❌        |
 |                    | Create Document            | ❌        |
 |                    | Upload Document            | ❌        |
+|                    | Move Document              | ❌        |
 |                    | Copy Document              | ❌        |
 | Taxonomy           |                            | ❌        |
 |                    | Get Taxonomy Group         | ❌        |

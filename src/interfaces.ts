@@ -31,6 +31,35 @@ export interface IList {
 }
 
 /**
+ * Interface representing a SharePoint content type
+ */
+export interface ISharePointContentType {
+  Id: {
+    StringValue: string;
+  };
+  Name: string;
+  Group: string;
+  Description: string;
+  Hidden: boolean;
+  ReadOnly: boolean;
+  Sealed: boolean;
+  [key: string]: any; // For any other fields that might be present
+}
+
+/**
+ * Interface representing a processed SharePoint content type
+ */
+export interface IContentType {
+  Id: string;
+  Name: string;
+  Group: string;
+  Description: string;
+  Hidden: boolean;
+  ReadOnly: boolean;
+  Sealed: boolean;
+}
+
+/**
  * Interface representing a SharePoint list item
  */
 export interface ISharePointListItem {
