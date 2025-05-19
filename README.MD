@@ -1,7 +1,16 @@
+# SharePoint Online MCP Server 🚀
 
-# SharePoint Online MCP Server
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.14.0-brightgreen.svg?style=flat-square)](https://nodejs.org/en/download/)
+[![SharePoint REST API](https://img.shields.io/badge/SharePoint-REST%20API-blue?style=flat-square)](https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/get-to-know-the-sharepoint-rest-service)
+[![npx](https://img.shields.io/badge/npx-compatible-orange?style=flat-square)](https://www.npmjs.com/package/server-sharepoint)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/Zerg00s/server-sharepoint/blob/main/LICENSE)
+[![SharePoint Online](https://img.shields.io/badge/SharePoint-Online-0078D4?style=flat-square&logo=microsoft-sharepoint)](https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration)
 
-This is a MCP server for Claude Desktop that allows you to interact with SharePoint Online using the SharePoint REST API. It is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
+![SharePoint MCP Server](IMG/SharePointMCPLogo.png)
+
+Most powerful SharePoint MCP server enabling seamless interaction with SharePoint Online through the SharePoint REST API.
+
+This MCP server for optimized for Claude Desktop and allows you to interact with SharePoint Online using the SharePoint REST API. It is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
 
 ## Implementation
 
