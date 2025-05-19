@@ -10,7 +10,7 @@
 
 Most powerful SharePoint MCP server enabling seamless interaction with SharePoint Online through the SharePoint REST API.
 
-This MCP server for optimized for Claude Desktop and allows you to interact with SharePoint Online using the SharePoint REST API. It is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
+This MCP server is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
 
 ## Implementation
 
@@ -86,7 +86,7 @@ This MCP server for optimized for Claude Desktop and allows you to interact with
 
 The server supports two authentication methods:
 
-1. **Client Secret Authentication** - Traditional client ID and secret. It's the App-only authentication that is deprecated and will not work after April 2026. 
+1. **Client Secret Authentication** - Traditional client ID and secret. It's the App-only authentication that is deprecated and will not work after April 2026.
 2. **Certificate Authentication** - More modern method using Azure AD App Registration with certificate
 
 ### Option 1: Client Secret Authentication (Will not work after April 2026)
