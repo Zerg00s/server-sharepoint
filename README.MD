@@ -10,7 +10,7 @@
 
 Most powerful SharePoint MCP server enabling seamless interaction with SharePoint Online through the SharePoint REST API.
 
-This MCP server is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients as well.
+This MCP server is designed to be used with the [Claude Desktop](https://claude.ai/download) app, but could be used by other MCP clients such as [Cline](https://cline.bot/) as well.
 
 ## Table of Contents
 
