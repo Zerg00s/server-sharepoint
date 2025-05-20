@@ -5,6 +5,9 @@
 [![npx](https://img.shields.io/badge/npx-compatible-orange?style=flat-square)](https://www.npmjs.com/package/server-sharepoint)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/Zerg00s/server-sharepoint/blob/main/LICENSE)
 [![SharePoint Online](https://img.shields.io/badge/SharePoint-Online-0078D4?style=flat-square&logo=microsoft-sharepoint)](https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration)
+[![Windows](https://img.shields.io/badge/Windows-Supported-blue?style=flat-square&logo=windows)](https://www.microsoft.com/en-us/windows)
+[![Linux](https://img.shields.io/badge/Linux-Not%20Supported-red?style=flat-square&logo=linux)](https://www.linux.org/)
+[![macOS](https://img.shields.io/badge/macOS-Not%20Supported-red?style=flat-square&logo=apple)](https://www.apple.com/macos/)
 
 ![SharePoint MCP Server](IMG/SharePointMCPLogo.png)
 
