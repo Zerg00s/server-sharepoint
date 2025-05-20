@@ -146,7 +146,9 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Update Taxonomy Label | ❌ |
 | Delete Taxonomy Label | ❌ |
 
-### Authentication Options
+-----------------------------------
+
+## Authentication Options
 
 The server supports two authentication methods:
 
@@ -161,7 +163,7 @@ This option requires the SharePoint administrator role.
 
 ⚠️ You need to be a SharePoint tenant admin or a global admin to create a SharePoint app.
 
-### Allow SharePoint-only apps
+#### Allow SharePoint-only apps
 
 - Download and install the SharePoint Online Management Shell from [here](https://www.microsoft.com/en-ca/download/details.aspx?id=35588).
 - Open PowerShell and run the following command to make sure the SharePoint-only apps are enabled:
@@ -231,7 +233,9 @@ This script will
 
 After running the script, you'll get an Admin Consent URL. Open it in a browser and sign in as a Global Admin to grant consent for the permissions.
 
-### Install Node.js
+-----------------------------------
+
+## Install Node.js
 
 Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
 
@@ -300,7 +304,7 @@ Install Node.js version: [22.14.0 or later](https://nodejs.org/en/download)
 
 ![Sample result](IMG/image-6.png)
 
-----------------------------------------------------------------
+----------------------------------------------------------------;
 
 ## For Contributors
 
