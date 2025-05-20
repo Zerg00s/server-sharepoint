@@ -53,13 +53,15 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 
 ### Users
 
-| Operation | Available |
-|-----------|-----------|
-| List Site Users | ✅ |
-| List Site Groups | ✅ |
-| Get Group Members | ✅ |
-| Add Group Member | ✅ |
-| Remove Group Member | ✅ |
+| Operation | Available | Notes |
+|-----------|-----------|--|
+| List Site Users | ✅ | |
+| List Site Groups | ✅ | |
+| Get Group Members | ✅ | |
+| Add Group Member | ✅ | |
+| Remove Group Member | ✅ | |
+| Get User Profile | ❌ | /_api/SP.UserProfiles.PeopleManager |
+| Update User Profile | ❌ | |
 
 ### Sites
 
@@ -81,6 +83,7 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Operation | Available |
 |-----------|-----------|
 | Get Regional Settings | ✅ |
+| Update Regional Settings | ❌ |
 
 ### Features
 
@@ -90,6 +93,8 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Get All Site Features | ✅ |
 | Get Site Feature | ✅ |
 | Get All Site Feature | ✅ |
+| Activate Feature | ❌ |
+| Deactivate Feature | ❌ |
 
 ### Lists
 
@@ -130,8 +135,8 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 |-----------|-----------|--|
 | Get All List Content Types | ✅ | |
 | Get List Content Type | ✅ | |
-| Create List Content Type | ❌ | Change CT title and group only |
-| Update List Content Type | ✅ | |
+| Create List Content Type | ❌ |  |
+| Update List Content Type | ✅ | Change CT title and group only |
 | Delete List Content Type | ✅ | |
 
 ### List Items
@@ -182,6 +187,12 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 | Create Taxonomy Label | ❌ |
 | Update Taxonomy Label | ❌ |
 | Delete Taxonomy Label | ❌ |
+
+### Search
+
+| Operation | Available | Notes |
+|-----------|-----------|--|
+| Search | ❌ | /_api/search |
 
 -----------------------------------
 
@@ -366,7 +377,8 @@ npx @modelcontextprotocol/inspector node build/src/index.js
 
 ### SharePoint REST API Documentation
 
-[SharePoint REST API Documentation](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-rest-reference/)
+- [SharePoint REST API Documentation](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-rest-reference/)
+- [Complete basic operations using SharePoint REST endpoints](https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints)
 
 ### Local Development
 
