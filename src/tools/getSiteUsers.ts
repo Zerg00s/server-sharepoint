@@ -1,7 +1,7 @@
 // src/tools/getSiteUsers.ts
 import request from 'request-promise';
 import { IToolResult, ISharePointUser } from '../interfaces';
-import { getSharePointHeaders, getRequestDigest } from '../auth_factory';
+import { getSharePointHeaders } from '../auth_factory';
 import { SharePointConfig } from '../config';
 
 export interface GetSiteUsersParams {
@@ -10,8 +10,8 @@ export interface GetSiteUsersParams {
 }
 
 /**
- * Get users from a SharePoint site, optionally filtered by role
- * @param params Parameters including site URL and optional role filter
+ * Get users from a SharePoint site
+ * @param params Parameters including site URL and optional role filter (role filter is ignored in this implementation)
  * @param config SharePoint configuration
  * @returns Tool result with users data
  */
@@ -19,16 +19,17 @@ export async function getSiteUsers(
     params: GetSiteUsersParams,
     config: SharePointConfig
 ): Promise<IToolResult> {
-    const { url, role = "All" } = params;
-    console.error(`getSiteUsers tool called with URL: ${url}, Role Filter: ${role}`);
+    const { url } = params;
+    console.log(`getSiteUsers tool called with URL: ${url}`);
 
     try {
         // Authenticate with SharePoint
         const headers = await getSharePointHeaders(url, config);
-        console.error("Headers prepared with authentication");
+        console.log("Headers prepared with authentication");
 
-        // Get all users from the site
-        console.error(`Getting users for site...`);
+        // Get all users from the site with a simple direct API call
+        console.log(`Getting users for site...`);
+        
         const usersResponse = await request({
             url: `${url}/_api/web/SiteUsers?$select=Id,Title,Email,LoginName,IsSiteAdmin`,
             headers: headers,
@@ -37,141 +38,41 @@ export async function getSiteUsers(
             timeout: 30000
         });
         
-        // Get site groups to filter by role if needed
-        const groupsResponse = await request({
-            url: `${url}/_api/web/AssociatedOwnerGroup`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 15000
-        });
+        // Process all users, filtering out system accounts
+        const allUsers = usersResponse.d?.results || [];
+        console.log(`Retrieved ${allUsers.length} total users`);
         
-        const ownersGroupId = groupsResponse.d.Id;
-        
-        // Get Members group
-        const membersGroupResponse = await request({
-            url: `${url}/_api/web/AssociatedMemberGroup`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 15000
-        });
-        
-        const membersGroupId = membersGroupResponse.d.Id;
-        
-        // Get Visitors group
-        const visitorsGroupResponse = await request({
-            url: `${url}/_api/web/AssociatedVisitorGroup`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 15000
-        });
-        
-        const visitorsGroupId = visitorsGroupResponse.d.Id;
-        
-        // Get group members for Owners
-        const ownersResponse = await request({
-            url: `${url}/_api/web/GetGroupById(${ownersGroupId})/Users`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 30000
-        });
-        
-        // Get group members for Members
-        const membersResponse = await request({
-            url: `${url}/_api/web/GetGroupById(${membersGroupId})/Users`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 30000
-        });
-        
-        // Get group members for Visitors
-        const visitorsResponse = await request({
-            url: `${url}/_api/web/GetGroupById(${visitorsGroupId})/Users`,
-            headers: headers,
-            json: true,
-            method: 'GET',
-            timeout: 30000
-        });
-        
-        // Create sets of user IDs by role for efficient lookup
-        const ownerIds = new Set(ownersResponse.d.results.map((user: ISharePointUser) => user.Id));
-        const memberIds = new Set(membersResponse.d.results.map((user: ISharePointUser) => user.Id));
-        const visitorIds = new Set(visitorsResponse.d.results.map((user: ISharePointUser) => user.Id));
-        
-        // Process all users and categorize by role
-        const allUsers = usersResponse.d.results;
-        
-        const owners: ISharePointUser[] = [];
-        const members: ISharePointUser[] = [];
-        const visitors: ISharePointUser[] = [];
-        const others: ISharePointUser[] = [];
-        
-        allUsers.forEach((user: ISharePointUser) => {
+        const filteredUsers = allUsers.filter((user: ISharePointUser) => {
             // Skip system accounts
-            if (user.LoginName && (
-                user.LoginName.includes('SP_FARM') || 
-                user.LoginName.includes('SHAREPOINT\\') ||
-                user.LoginName.includes('NT AUTHORITY\\') ||
-                user.LoginName.includes('APP@SharePoint')
-            )) {
-                return;
-            }
-            
-            const formattedUser = {
+            return !(
+                user.LoginName && (
+                    user.LoginName.includes('SP_FARM') || 
+                    user.LoginName.includes('SHAREPOINT\\') ||
+                    user.LoginName.includes('NT AUTHORITY\\') ||
+                    user.LoginName.includes('APP@SharePoint')
+                )
+            );
+        }).map((user: ISharePointUser) => {
+            // Format user data consistently
+            return {
                 Id: user.Id,
-                Title: user.Title,
+                Title: user.Title || '',
                 Email: user.Email || '',
-                LoginName: user.LoginName,
+                LoginName: user.LoginName || '',
                 IsSiteAdmin: user.IsSiteAdmin || false
             };
-            
-            if (ownerIds.has(user.Id)) {
-                owners.push(formattedUser);
-            } else if (memberIds.has(user.Id)) {
-                members.push(formattedUser);
-            } else if (visitorIds.has(user.Id)) {
-                visitors.push(formattedUser);
-            } else {
-                others.push(formattedUser);
-            }
         });
         
-        // Filter results based on requested role
-        let resultUsers: ISharePointUser[] = [];
-        
-        switch (role) {
-            case "Owners":
-                resultUsers = owners;
-                break;
-            case "Members":
-                resultUsers = members;
-                break;
-            case "Visitors":
-                resultUsers = visitors;
-                break;
-            case "All":
-            default:
-                resultUsers = [...owners, ...members, ...visitors, ...others];
-                break;
-        }
+        console.log(`Filtered to ${filteredUsers.length} non-system users`);
         
         return {
             content: [{
                 type: "text",
                 text: JSON.stringify({
                     siteUrl: url,
-                    roleFilter: role,
                     users: {
-                        total: resultUsers.length,
-                        owners: role === "All" ? owners.length : undefined,
-                        members: role === "All" ? members.length : undefined,
-                        visitors: role === "All" ? visitors.length : undefined,
-                        others: role === "All" ? others.length : undefined,
-                        items: resultUsers
+                        total: filteredUsers.length,
+                        items: filteredUsers
                     }
                 }, null, 2)
             }]
@@ -201,4 +102,3 @@ export async function getSiteUsers(
 }
 
 export default getSiteUsers;
-

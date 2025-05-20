@@ -18,7 +18,7 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 
 | Operation | Available |
 |-----------|-----------|
-| List Site Users by Role | ✅ |
+| List Site Users | ✅ |
 | List Site Groups | ✅ |
 | Get Group Members | ✅ |
 | Add Group Member | ✅ |
@@ -321,7 +321,11 @@ npx @modelcontextprotocol/inspector node build/src/index.js
 
 ## MCP Server Context 7 Documentation for LLMs
 
-[https://context7.com/modelcontextprotocol/servers](MCP Server Context 7 Documentation for LLMs)
+[MCP Server Context 7 Documentation for LLMs](https://context7.com/modelcontextprotocol/servers)
+
+## SharePoint REST API Documentation
+
+[SharePoint REST API Documentation](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-rest-reference/)
 
 ## Local Development
 

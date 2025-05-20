@@ -1,6 +1,6 @@
 {
   "name": "server-sharepoint",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "main": "build/index.js",
   "bin": {
     "server-sharepoint": "build/src/index.js"
@@ -10,7 +10,8 @@
     "start": "node build/index.js",
     "debug": "tsx src/debug.ts",
     "debug-secret": "tsx src/debug-secret.ts",
-    "debug-site-ct": "tsx src/debug-site-contenttypes.ts"
+    "debug-site-ct": "tsx src/debug-site-contenttypes.ts",
+    "debug-site-users": "tsx src/debug-getSiteUsers.ts"
   },
   "author": "",
   "license": "ISC",
