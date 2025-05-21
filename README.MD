@@ -382,6 +382,7 @@ npx @modelcontextprotocol/inspector node build/src/index.js
 
 - [SharePoint REST API Documentation](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-rest-reference/)
 - [Complete basic operations using SharePoint REST endpoints](https://learn.microsoft.com/en-us/sharepoint/dev/sp-add-ins/complete-basic-operations-using-sharepoint-rest-endpoints)
+- [Request XML Schema for /_vti_bin/client.svc/ProcessQuery](https://learn.microsoft.com/en-us/openspecs/sharepoint_protocols/ms-csom/2845342b-b15c-4870-baf8-3187870695b2)
 
 ### Local Development
 
