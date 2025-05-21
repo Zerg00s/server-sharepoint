@@ -58,6 +58,8 @@ import getRegionalSettings from './getRegionalSettings';
 import getSiteCollectionFeatures from './getSiteCollectionFeatures';
 import getSiteFeatures from './getSiteFeatures';
 import getSiteFeature from './getSiteFeature';
+// Import search tool
+import searchSharePointSite from './searchSharePointSite';
 
 // Export all tools
 export {
@@ -121,7 +123,9 @@ export {
     getRegionalSettings,
     getSiteCollectionFeatures,
     getSiteFeatures,
-    getSiteFeature
+    getSiteFeature,
+    // Search tool
+    searchSharePointSite
 };
 
 // Also export the parameter interfaces for better type safety
@@ -188,3 +192,5 @@ export type { GetRegionalSettingsParams } from './getRegionalSettings';
 export type { GetSiteCollectionFeaturesParams } from './getSiteCollectionFeatures';
 export type { GetSiteFeaturesParams } from './getSiteFeatures';
 export type { GetSiteFeatureParams } from './getSiteFeature';
+// Search tool param
+export type { SearchSharePointSiteParams } from './searchSharePointSite';

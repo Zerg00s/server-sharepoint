@@ -10,6 +10,7 @@ import { registerBatchTools } from './batchTools';
 import { registerContentTypeTools } from './contentTypeTools';
 import { registerSiteContentTypeTools } from './siteContentTypeTools';
 import { registerRegionalAndFeaturesTools } from './regionalAndFeaturesTools';
+import { registerSearchTools } from './searchTools';
 
 /**
  * Register all tool groups with the server
@@ -43,4 +44,7 @@ export function registerAllToolGroups(server: McpServer, config: SharePointConfi
     
     // Register regional settings and features management tools
     registerRegionalAndFeaturesTools(server, config);
+    
+    // Register search tools
+    registerSearchTools(server, config);
 }

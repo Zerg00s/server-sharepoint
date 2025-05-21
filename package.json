@@ -1,6 +1,6 @@
 {
   "name": "server-sharepoint",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "main": "build/index.js",
   "bin": {
     "server-sharepoint": "build/src/index.js"

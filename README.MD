@@ -193,9 +193,9 @@ This MCP server is designed to be used with the [Claude Desktop](https://claude.
 
 ### Search
 
-| Operation | Available | Notes |
-|-----------|-----------|--|
-| Search | ❌ | /_api/search |
+| Operation | Available |
+|-----------|-----------|
+| Search within SharePoint Site | ✅ |
 
 -----------------------------------
 
