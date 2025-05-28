@@ -110,7 +110,7 @@ function Register-AzureApplication {
     
     Write-Log "Registering new Azure AD application: $AppName" -ForegroundColor Cyan
     
-    # First create the application without key credentials
+    # Create application without redirect URI since this is a daemon/service app
     $appParams = @{
         DisplayName = $AppName
         SignInAudience = "AzureADMyOrg"
@@ -153,12 +153,16 @@ function Add-SharePointPermissions {
     # SharePoint Online API ID is always this value
     $sharepointApiId = "00000003-0000-0ff1-ce00-000000000000"
     
+    # Generate admin consent URL early
+    $tenantId = (Get-MgContext).TenantId
+    $adminConsentUrl = "https://login.microsoftonline.com/$tenantId/adminconsent?client_id=$($Application.AppId)"
+    
     # Check if SharePoint API service principal exists
     $sharepointSp = Get-MgServicePrincipal -Filter "appId eq '$sharepointApiId'"
     
     if (-not $sharepointSp) {
         Write-Log "SharePoint API service principal not found. Make sure you have access to it." -ForegroundColor Red
-        return
+        return [string]$adminConsentUrl
     }
     
     # Find the Sites.FullControl.All permission
@@ -166,7 +170,7 @@ function Add-SharePointPermissions {
     
     if (-not $sitesFullControlPermission) {
         Write-Log "SharePoint permission 'Sites.FullControl.All' not found." -ForegroundColor Red
-        return
+        return [string]$adminConsentUrl
     }
     
     # Define the required resource access
@@ -200,15 +204,28 @@ function Add-SharePointPermissions {
     
     Write-Log "Added 'Sites.FullControl.All' permission to application" -ForegroundColor Green
     Write-Log "IMPORTANT: You still need to grant admin consent for this permission!" -ForegroundColor Yellow
+
+    Write-Log "`n================== ADMIN CONSENT REQUIRED ==================" -ForegroundColor Yellow
+    Write-Log "Opening browser for admin consent in 5 seconds..." -ForegroundColor Cyan
+    Write-Log "After granting consent:" -ForegroundColor Cyan
+    Write-Log "  1. You'll see an error about 'no reply address'" -ForegroundColor White
+    Write-Log "  2. This is NORMAL - consent has been granted!" -ForegroundColor Green
+    Write-Log "  3. Simply close the browser tab" -ForegroundColor White
+    Write-Log "============================================================" -ForegroundColor Yellow
     
-    # Generate admin consent URL
-    $tenantId = (Get-MgContext).TenantId
-    $adminConsentUrl = "https://login.microsoftonline.com/$tenantId/adminconsent?client_id=$($Application.AppId)"
+    Start-Sleep -Seconds 5
+    Start-Process $adminConsentUrl
     
-    Write-Log "Admin Consent URL: $adminConsentUrl" -ForegroundColor Cyan
-    Write-Log "Open this URL in a browser and log in as a Global Admin to grant consent" -ForegroundColor Cyan
+    Write-Log "`nAdmin Consent URL: $adminConsentUrl" -ForegroundColor Cyan
     
-    return $adminConsentUrl
+    # Wait for user to complete consent
+    Write-Log "`nPress Enter after you have granted admin consent and closed the browser tab..." -ForegroundColor Yellow
+    Read-Host | Out-Null
+    
+    Write-Log "Admin consent process completed!" -ForegroundColor Green
+    
+    # Explicitly return string
+    return [string]$adminConsentUrl
 }
 
 function Output-ConfigDetails {
@@ -400,7 +417,19 @@ try {
     $application = Register-AzureApplication -AppName $AppName -Certificate $certificate
     
     # Add SharePoint permissions
-    $adminConsentUrl = Add-SharePointPermissions -Application $application
+    $result = Add-SharePointPermissions -Application $application
+    
+    # Extract just the URL string from the result
+    if ($result -is [array]) {
+        $adminConsentUrl = $result[-1].ToString()
+    } else {
+        $adminConsentUrl = $result.ToString()
+    }
+    
+    # Ensure we have a valid URL
+    if (-not $adminConsentUrl -or $adminConsentUrl -notlike "https://*") {
+        $adminConsentUrl = "https://login.microsoftonline.com/$($graphContext.TenantId)/adminconsent?client_id=$($application.AppId)"
+    }
     
     # Output configuration details
     Output-ConfigDetails -Application $application -Certificate $certificate -OutputPath $ConfigOutputPath -AdminConsentUrl $adminConsentUrl -CertificatePassword $CertPassword
@@ -412,7 +441,7 @@ try {
                            -Password $CertPassword
     
     Write-Log "`nSetup complete!" -ForegroundColor Green
-    Write-Log "1. Open the Admin Consent URL in a browser to grant permissions" -ForegroundColor Yellow
+    Write-Log "1. If you haven't already, complete the admin consent process" -ForegroundColor Yellow
     Write-Log "2. Update your configuration with the values in the output files" -ForegroundColor Yellow
     Write-Log "3. The certificate is in your certificate store (CurrentUser\My) and exported to: $CertPath" -ForegroundColor Yellow
     
