@@ -287,6 +287,52 @@ AdminConsentURL = $AdminConsentUrl
     Write-Log "  - Text Details: $txtPath" -ForegroundColor Green
 }
 
+function Output-SampleMcpConfig {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$TenantId,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$AppId,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$Thumbprint,
+        
+        [Parameter(Mandatory = $true)]
+        [string]$Password,
+        
+        [Parameter(Mandatory = $false)]
+        [string]$OutputPath = ".\claude_desktop_config.json"
+    )
+
+    # Create the JSON content manually for proper formatting
+    $jsonContent = @"
+{
+  "mcpServers": {
+    "server-sharepoint": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "server-sharepoint"
+      ],
+      "env": {
+        "M365_TENANT_ID": "$TenantId",
+        "AZURE_APPLICATION_ID": "$AppId",
+        "AZURE_APPLICATION_CERTIFICATE_THUMBPRINT": "$Thumbprint",
+        "AZURE_APPLICATION_CERTIFICATE_PASSWORD": "$Password"
+      }
+    }
+  }
+}
+"@
+
+    # Write UTF8 without BOM
+    $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+    [System.IO.File]::WriteAllText($OutputPath, $jsonContent, $utf8NoBom)
+
+    Write-Log "Sample MCP config saved to: $OutputPath" -ForegroundColor Green
+}
+
 # Main execution
 try {
     # Check if Microsoft Graph PowerShell is installed and user is logged in
@@ -358,6 +404,12 @@ try {
     
     # Output configuration details
     Output-ConfigDetails -Application $application -Certificate $certificate -OutputPath $ConfigOutputPath -AdminConsentUrl $adminConsentUrl -CertificatePassword $CertPassword
+
+    # Output sample MCP config
+    Output-SampleMcpConfig -TenantId $graphContext.TenantId `
+                           -AppId $application.AppId `
+                           -Thumbprint $certificate.Thumbprint `
+                           -Password $CertPassword
     
     Write-Log "`nSetup complete!" -ForegroundColor Green
     Write-Log "1. Open the Admin Consent URL in a browser to grant permissions" -ForegroundColor Yellow
@@ -376,50 +428,3 @@ catch {
     Write-Log $_.Exception.Message -ForegroundColor Red
     Write-Log $_.ScriptStackTrace -ForegroundColor Red
 }
-
-function Output-SampleMcpConfig {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$TenantId,
-        
-        [Parameter(Mandatory = $true)]
-        [string]$AppId,
-        
-        [Parameter(Mandatory = $true)]
-        [string]$Thumbprint,
-        
-        [Parameter(Mandatory = $true)]
-        [string]$Password,
-        
-        [Parameter(Mandatory = $false)]
-        [string]$OutputPath = ".\claude_desktop_config.json"
-    )
-
-    $config = @{
-        "server-sharepoint" = @{
-            command = "npx"
-            args = @("-y", "server-sharepoint")
-            env = @{
-                "M365_TENANT_ID" = $TenantId
-                "AZURE_APPLICATION_ID" = $AppId
-                "AZURE_APPLICATION_CERTIFICATE_THUMBPRINT" = $Thumbprint
-                "AZURE_APPLICATION_CERTIFICATE_PASSWORD" = $Password
-            }
-        }
-    }
-
-    $json = $config | ConvertTo-Json -Depth 4
-    Set-Content -Path $OutputPath -Value $json -Encoding UTF8
-
-    Write-Log "Sample MCP config saved to: $OutputPath" -ForegroundColor Green
-}
-
-
-# Output configuration details
-Output-ConfigDetails -Application $application -Certificate $certificate -OutputPath $ConfigOutputPath -AdminConsentUrl $adminConsentUrl -CertificatePassword $CertPassword
-
-# Output sampleMCP-config.json
-Output-SampleMcpConfig -TenantId $graphContext.TenantId `
-                       -AppId $application.AppId `
-                       -Thumbprint $certificate.Thumbprint `
-                       -Password $CertPassword
